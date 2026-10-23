@@ -1,0 +1,153 @@
+name: data-analysis
+services:
+  redis:
+    image: redis:8.2-alpine
+    command: [redis-server, --maxmemory, 64mb, --maxmemory-policy, allkeys-lru, --save, "", --appendonly, "no"]
+    ports: ["127.0.0.1:6379:6379"]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 30s
+      start_interval: 2s
+      start_period: 10s
+      timeout: 5s
+      retries: 10
+  db:
+    build:
+      context: ./infra
+      dockerfile: Dockerfile.postgres
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python3 scripts/local_setup.py first}
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports: ["127.0.0.1:54322:5432"]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -h localhost"]
+      interval: 30s
+      start_interval: 2s
+      start_period: 30s
+      timeout: 5s
+      retries: 30
+  auth:
+    image: supabase/gotrue:v2.197.0
+    depends_on:
+      db: {condition: service_healthy}
+    environment:
+      GOTRUE_API_HOST: 0.0.0.0
+      GOTRUE_API_PORT: 9999
+      API_EXTERNAL_URL: http://127.0.0.1:54321/auth/v1
+      GOTRUE_SITE_URL: http://127.0.0.1:3000
+      GOTRUE_URI_ALLOW_LIST: http://localhost:3000,http://127.0.0.1:3000
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@db:5432/postgres
+      GOTRUE_JWT_SECRET: ${JWT_SECRET}
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_JWT_ISSUER: http://127.0.0.1:54321/auth/v1
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_JWT_EXP: 3600
+      GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
+      GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "true"
+      GOTRUE_MAILER_AUTOCONFIRM: "true"
+      GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 100
+      GOTRUE_RATE_LIMIT_EMAIL_SENT: 100
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://localhost:9999/health]
+      interval: 30s
+      start_interval: 2s
+      start_period: 30s
+      timeout: 5s
+      retries: 20
+  rest:
+    image: postgrest/postgrest:v14.18
+    depends_on:
+      db: {condition: service_healthy}
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${POSTGRES_PASSWORD}@db:5432/postgres
+      PGRST_DB_SCHEMAS: storage
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+  storage:
+    image: supabase/storage-api:v1.81.0
+    depends_on:
+      db: {condition: service_healthy}
+      rest: {condition: service_started}
+    environment:
+      ANON_KEY: ${ANON_KEY}
+      SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      POSTGREST_URL: http://rest:3000
+      AUTH_JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@db:5432/postgres
+      STORAGE_PUBLIC_URL: http://127.0.0.1:54321
+      FILE_SIZE_LIMIT: 15000000
+      STORAGE_BACKEND: file
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: local
+      REGION: local
+      GLOBAL_S3_BUCKET: local
+      ENABLE_IMAGE_TRANSFORMATION: "false"
+    volumes: [storage-data:/var/lib/storage]
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://127.0.0.1:5000/status]
+      interval: 30s
+      start_interval: 2s
+      start_period: 30s
+      timeout: 5s
+      retries: 30
+  gateway:
+    build:
+      context: ./infra
+      dockerfile: Dockerfile.gateway
+    depends_on:
+      auth: {condition: service_healthy}
+      storage: {condition: service_healthy}
+    ports: ["127.0.0.1:54321:8000"]
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://127.0.0.1:8000/health]
+      interval: 30s
+      start_interval: 2s
+      start_period: 30s
+      timeout: 5s
+      retries: 10
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    init: true
+    depends_on:
+      gateway: {condition: service_healthy}
+      redis: {condition: service_started}
+    ports: ["127.0.0.1:4000:4000"]
+    environment:
+      DATABASE_URL: postgresql://analysis_app:${POSTGRES_PASSWORD}@db:5432/postgres
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ISSUER: http://127.0.0.1:54321/auth/v1
+      STORAGE_URL: http://storage:5000
+      STORAGE_PUBLIC_URL: http://127.0.0.1:54321/storage/v1
+      STORAGE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      SUPABASE_PUBLIC_URL: http://127.0.0.1:54321
+      SUPABASE_ANON_KEY: ${ANON_KEY}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
+      ALLOWED_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+      CACHE_DIRECTORY: /tmp/analysis-tables
+      REDIS_URL: redis://redis:6379/0
+      REDIS_NAMESPACE: data-analysis:v1
+    healthcheck:
+      test: [CMD, /api/.venv/bin/python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:4000/ready')"]
+      interval: 30s
+      start_interval: 2s
+      start_period: 30s
+      timeout: 5s
+      retries: 20
+  frontend:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_API_BASE_URL: http://127.0.0.1:4000
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on:
+      backend: {condition: service_healthy}
+volumes:
+  postgres-data:
+  storage-data:

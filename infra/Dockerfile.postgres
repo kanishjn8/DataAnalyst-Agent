@@ -1,0 +1,2 @@
+FROM supabase/postgres:17.6.1.136
+COPY roles.sql /docker-entrypoint-initdb.d/init-scripts/99-analysis-roles.sql

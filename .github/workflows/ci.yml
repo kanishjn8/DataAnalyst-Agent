@@ -1,0 +1,28 @@
+name: checks
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          version: '0.11.3'
+      - run: npm ci
+      - run: uv sync --directory backend --frozen
+      - run: python3 scripts/local_setup.py
+      - run: docker compose up -d --wait --wait-timeout 180 redis db auth rest storage gateway
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run lint:backend
+      - run: npm run test:backend
+      - run: npm run evaluate
+      - run: npm run build
+      - if: always()
+        run: docker compose down
