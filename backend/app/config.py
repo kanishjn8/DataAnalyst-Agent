@@ -1,11 +1,47 @@
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 load_dotenv(Path(__file__).resolve().parents[1] / ".env.local")
+
+
+def parse_allowed_origins(value):
+    origins = []
+    for entry in value.split(","):
+        origin = entry.strip()
+        if len(origin) >= 2 and origin[0] == origin[-1] and origin[0] in "\"'":
+            origin = origin[1:-1].strip()
+        origin = origin.rstrip("/")
+        if not origin:
+            continue
+        parsed = urlsplit(origin)
+        if (
+            parsed.scheme not in ("http", "https")
+            or not parsed.hostname
+            or parsed.username is not None
+            or parsed.password is not None
+            or parsed.path
+            or parsed.query
+            or parsed.fragment
+            or "*" in parsed.netloc
+            or any(character.isspace() for character in origin)
+        ):
+            raise ValueError("ALLOWED_ORIGINS must contain comma-separated HTTP(S) origins without paths.")
+        # Browsers lowercase hosts and omit default ports from their Origin header.
+        host = parsed.hostname.lower()
+        if ":" in host:
+            host = f"[{host}]"
+        port = parsed.port
+        if port and port != {"http": 80, "https": 443}[parsed.scheme]:
+            host += f":{port}"
+        normalized = f"{parsed.scheme}://{host}"
+        if normalized not in origins:
+            origins.append(normalized)
+    return tuple(origins)
 
 
 @dataclass(frozen=True)
@@ -18,7 +54,7 @@ class Settings:
     )
     jwt_secret: str = field(default_factory=lambda: os.getenv("JWT_SECRET", ""))
     jwt_issuer: str = field(
-        default_factory=lambda: os.getenv("JWT_ISSUER", "http://127.0.0.1:54321/auth/v1")
+        default_factory=lambda: os.getenv("JWT_ISSUER", "")
     )
     storage_url: str = field(
         default_factory=lambda: os.getenv("STORAGE_URL", "http://127.0.0.1:54321/storage/v1")
@@ -49,7 +85,11 @@ class Settings:
     gemini_api_key: str = field(default_factory=lambda: os.getenv("GEMINI_API_KEY", "").strip())
     gemini_model: str = field(default_factory=lambda: os.getenv("GEMINI_MODEL", "gemini-2.5-flash"))
     allowed_origins: tuple[str, ...] = field(
-        default_factory=lambda: tuple(
-            os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+        default_factory=lambda: parse_allowed_origins(
+            os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
         )
     )
+
+    def __post_init__(self):
+        if not self.jwt_issuer:
+            object.__setattr__(self, "jwt_issuer", self.supabase_public_url.rstrip("/") + "/auth/v1")

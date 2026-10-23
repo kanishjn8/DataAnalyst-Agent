@@ -38,14 +38,16 @@ def create_app(settings=None, repository=None, provider=None, authenticate=None)
 
     @asynccontextmanager
     async def lifespan(_app):
-        if not settings.jwt_secret:
-            raise RuntimeError("JWT_SECRET must be configured. Run the local Compose setup.")
-        await repository.open()
-        await storage.initialize()
-        await cache.initialize()
         try:
+            if isinstance(authenticate, Auth):
+                authenticate.validate()
+            await repository.open()
+            await storage.initialize()
+            await cache.initialize()
             yield
         finally:
+            if isinstance(authenticate, Auth):
+                await authenticate.close()
             await cache.close()
             await provider.close()
             await storage.close()

@@ -36,6 +36,10 @@ GEMINI_API_KEY=your-key
 GEMINI_MODEL=gemini-2.5-flash
 ```
 
+The project URL setting is `SUPABASE_PUBLIC_URL`. Locally it is `http://127.0.0.1:54321`. For a hosted backend, create an environment variable with that name in Render or Railway and use the HTTPS project URL from Supabase. It does not have to be present in a generated `.env` before you can add it. Keep cloud credentials separate from the local Docker credentials. [.env.example](.env.example) lists the hosted backend settings and current authentication compatibility limits.
+
+For hosted requests, `ALLOWED_ORIGINS` is a comma-separated list of frontend origins, for example `https://your-frontend.vercel.app`. Use the address actually open in the browser; Vercel preview addresses differ from the production address. Spaces and trailing slashes are normalized, but paths and wildcard domains are rejected. `SUPABASE_PUBLIC_URL` must be the project base URL, without `/rest/v1`; only the storage settings use the `/storage/v1` suffix. Save and deploy backend environment changes in Render. A changed `NEXT_PUBLIC_API_BASE_URL` needs a new frontend build in Vercel.
+
 Then start the services:
 
 ```bash
@@ -130,6 +134,14 @@ For Railway, set the backend's `REDIS_URL` to the TLS connection string from Ups
 
 Set `REDIS_NAMESPACE` to a separate value for each environment, such as `data-analysis:production` or `data-analysis:staging`. Both settings belong on the backend. Redis credentials must never use a `NEXT_PUBLIC_` variable. Supabase Storage still receives signed uploads directly from the browser.
 
+## Hosted authentication
+
+In Supabase, open Authentication → URL Configuration. Set the Site URL to the deployed frontend, such as `https://your-frontend.vercel.app`. Add `https://your-frontend.vercel.app/` to Redirect URLs. Add `http://localhost:3000/` separately when using the cloud project for local development. Keep the default confirmation email template pointing at Supabase's confirmation link.
+
+Signup explicitly requests a return to the current frontend origin. The frontend processes the returned verification session through the Supabase SDK. After changing these settings, use a new confirmation email; an old email can retain its earlier redirect. If the account is already confirmed, sign in on the deployed frontend.
+
+For ES256 or RS256 projects, the backend verifies tokens against the public signing keys at the configured project's `/auth/v1/.well-known/jwks.json` endpoint. It checks the signature, issuer, audience, expiry and authenticated user role. Keys are cached for five minutes; unknown key IDs can trigger a refresh at most once per 30 seconds. `JWT_SECRET` is optional for those hosted projects, and still required for local or legacy HS256 tokens. `JWT_ISSUER` defaults to the project base URL followed by `/auth/v1`. Authentication changes need a backend deploy on Render and a frontend deploy on Vercel.
+
 ## Limits and assumptions
 
 - Up to five source files, 15 MB combined and 20,000 source rows per analysis; 40 columns per table. Derived tables also have a 15 MB and 20,000-row limit.
@@ -142,7 +154,7 @@ Set `REDIS_NAMESPACE` to a separate value for each environment, such as `data-an
 - Redis failures fall back to Postgres without regenerating dashboards or calling Gemini. Connection attempts have short timeouts and a five-second retry cooldown. Backend startup and cache recovery invalidate the cache namespace so missed invalidations do not survive recovery. Concurrent fills are checked against invalidation tokens. Keep one backend process initially: miss coalescing and request concurrency limits are per process; a second replica could briefly serve an old cached response during another replica's cache outage, until invalidation or the five-minute expiry.
 - The backend also keeps a bounded temporary CSV/Parquet disk cache for DuckDB. This is separate from Redis. Postgres and object storage remain the durable sources of truth.
 - Old SQLite files, if present in `backend/.data`, are retained as a backup but are not imported into Postgres.
-- Local email auto-confirmation and anonymous login are testing settings. No cloud resources have been deployed. A future Vercel frontend can use `NEXT_PUBLIC_API_BASE_URL` set before building; the backend needs a Python-capable host and matching allowed origins.
+- Local email auto-confirmation and anonymous login are testing settings. A hosted Vercel frontend uses `NEXT_PUBLIC_API_BASE_URL` set before building; the backend needs a Python-capable host and matching allowed origins. Hosted Supabase email confirmation uses the URL settings described above.
 
 To remove expired or abandoned objects, run this explicit maintenance command while the infrastructure is up:
 

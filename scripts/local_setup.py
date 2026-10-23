@@ -17,7 +17,8 @@ if not target.exists():
         unsigned = encode({'alg': 'HS256', 'typ': 'JWT'}) + b'.' + payload
         return (unsigned + b'.' + base64.urlsafe_b64encode(hmac.new(secret.encode(), unsigned, hashlib.sha256).digest()).rstrip(b'=')).decode()
     values = dict(POSTGRES_PASSWORD=secrets.token_hex(24), JWT_SECRET=secret,
-                  ANON_KEY=token('anon'), SERVICE_ROLE_KEY=token('service_role'), GEMINI_API_KEY='')
+                  ANON_KEY=token('anon'), SERVICE_ROLE_KEY=token('service_role'),
+                  SUPABASE_PUBLIC_URL='http://127.0.0.1:54321', GEMINI_API_KEY='')
     previous = root / 'backend/.env.local'
     if previous.exists():
         for line in previous.read_text().splitlines():
