@@ -2,6 +2,10 @@
 
 Upload CSV files, prepare related tables on a canvas, and ask questions about the data. The frontend uses Next.js. FastAPI handles validation, DuckDB queries and Gemini calls. Local Supabase services provide authentication, Postgres and private file storage.
 
+## Live app
+
+[Open the application](https://data-analyst-agent-livid.vercel.app)
+
 ## Architecture
 
 ```mermaid
@@ -36,9 +40,7 @@ GEMINI_API_KEY=your-key
 GEMINI_MODEL=gemini-2.5-flash
 ```
 
-The project URL setting is `SUPABASE_PUBLIC_URL`. Locally it is `http://127.0.0.1:54321`. For a hosted backend, create an environment variable with that name in Render or Railway and use the HTTPS project URL from Supabase. It does not have to be present in a generated `.env` before you can add it. Keep cloud credentials separate from the local Docker credentials. [.env.example](.env.example) lists the hosted backend settings and current authentication compatibility limits.
-
-For hosted requests, `ALLOWED_ORIGINS` is a comma-separated list of frontend origins, for example `https://your-frontend.vercel.app`. Use the address actually open in the browser; Vercel preview addresses differ from the production address. Spaces and trailing slashes are normalized, but paths and wildcard domains are rejected. `SUPABASE_PUBLIC_URL` must be the project base URL, without `/rest/v1`; only the storage settings use the `/storage/v1` suffix. Save and deploy backend environment changes in Render. A changed `NEXT_PUBLIC_API_BASE_URL` needs a new frontend build in Vercel.
+The local project URL is `http://127.0.0.1:54321`. The setup script generates the required authentication and database credentials; you do not need a cloud Supabase account.
 
 Then start the services:
 
@@ -60,8 +62,6 @@ Open [the application](http://127.0.0.1:3000). Create an account using an email 
 All infrastructure runs locally. Gemini is the only external service, and questions and dashboard generation need a valid key and internet access. Uploading, preparing, previewing and exporting data work without it. There are no simulated answers.
 
 Docker checks service readiness every 30 seconds after startup. `/health` is a cheap liveness response; `/ready` checks the database. Neither endpoint calls Gemini or consumes question quota. Ordinary workspace reads and saves do not compete with the model-request concurrency limit.
-
-For external uptime monitoring, use `/health`. It supports both `GET` and `HEAD`, including monitors that only offer `HEAD`. A five-minute interval is enough; no separate cron job is needed. Keep the platform's readiness check on `/ready`.
 
 ### After changing the API key
 
@@ -132,17 +132,7 @@ npm run evaluate -- --live
 
 Docker Compose starts Redis automatically and connects the backend to `redis://redis:6379/0`. When running the backend outside Docker, `REDIS_URL` defaults to `redis://127.0.0.1:6379/0`. Keep Redis running alongside the other local infrastructure.
 
-For Railway, set the backend's `REDIS_URL` to the TLS connection string from Upstash, for example `rediss://default:YOUR_TOKEN@YOUR_ENDPOINT:6379`. Use the actual port supplied by Upstash. The same Python client handles both environments; an Upstash REST URL is not a Redis connection string. See [Upstash's connection instructions](https://upstash.com/docs/redis/howto/connect-client).
-
-Set `REDIS_NAMESPACE` to a separate value for each environment, such as `data-analysis:production` or `data-analysis:staging`. Both settings belong on the backend. Redis credentials must never use a `NEXT_PUBLIC_` variable. Supabase Storage still receives signed uploads directly from the browser.
-
-## Hosted authentication
-
-In Supabase, open Authentication → URL Configuration. Set the Site URL to the deployed frontend, such as `https://your-frontend.vercel.app`. Add `https://your-frontend.vercel.app/` to Redirect URLs. Add `http://localhost:3000/` separately when using the cloud project for local development. Keep the default confirmation email template pointing at Supabase's confirmation link.
-
-Signup explicitly requests a return to the current frontend origin. The frontend processes the returned verification session through the Supabase SDK. After changing these settings, use a new confirmation email; an old email can retain its earlier redirect. If the account is already confirmed, sign in on the deployed frontend.
-
-For ES256 or RS256 projects, the backend verifies tokens against the public signing keys at the configured project's `/auth/v1/.well-known/jwks.json` endpoint. It checks the signature, issuer, audience, expiry and authenticated user role. Keys are cached for five minutes; unknown key IDs can trigger a refresh at most once per 30 seconds. `JWT_SECRET` is optional for those hosted projects, and still required for local or legacy HS256 tokens. `JWT_ISSUER` defaults to the project base URL followed by `/auth/v1`. Authentication changes need a backend deploy on Render and a frontend deploy on Vercel.
+Redis is used by the backend only. Its local cache is disposable; saved dashboards remain in Postgres.
 
 ## Limits and assumptions
 
@@ -153,10 +143,10 @@ For ES256 or RS256 projects, the backend verifies tokens against the public sign
 - Anomaly queries use statistical thresholds. Their explanation describes the calculation, not an assumed business cause. Forecast requests can use SQL regression; there is no separate forecasting or semantic-search service.
 - One backend process supports two concurrent analytical requests. Busy requests receive a retry message. Work runs inside FastAPI, without a separate worker or durable task queue. Interrupted requests do not automatically resume.
 - Redis caches saved dashboards for five minutes, with separate keys per user, analysis and table selection. Data changes invalidate the analysis cache. Responses over 1 MB are served from Postgres without caching. The local Redis container uses up to 64 MB and evicts older keys under memory pressure; its contents are disposable.
-- Redis failures fall back to Postgres without regenerating dashboards or calling Gemini. Connection attempts have short timeouts and a five-second retry cooldown. Backend startup and cache recovery invalidate the cache namespace so missed invalidations do not survive recovery. Concurrent fills are checked against invalidation tokens. Keep one backend process initially: miss coalescing and request concurrency limits are per process; a second replica could briefly serve an old cached response during another replica's cache outage, until invalidation or the five-minute expiry.
+- Redis failures fall back to Postgres without regenerating dashboards or calling Gemini.
 - The backend also keeps a bounded temporary CSV/Parquet disk cache for DuckDB. This is separate from Redis. Postgres and object storage remain the durable sources of truth.
-- Old SQLite files, if present in `backend/.data`, are retained as a backup but are not imported into Postgres.
-- Local email auto-confirmation and anonymous login are testing settings. A hosted Vercel frontend uses `NEXT_PUBLIC_API_BASE_URL` set before building; the backend needs a Python-capable host and matching allowed origins. Hosted Supabase email confirmation uses the URL settings described above.
+
+## Local maintenance
 
 To remove expired or abandoned objects, run this explicit maintenance command while the infrastructure is up:
 
