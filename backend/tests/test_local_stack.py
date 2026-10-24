@@ -365,6 +365,17 @@ async def test_actual_duckdb_question_repairs_and_saved_context(stack):
     calls = model.calls
     retry = await client.post("/analyze", json=payload)
     assert '"cached": true' in retry.text and model.calls == calls
+    # Pinning uses the persisted result and survives a fresh workspace read.
+    pinned = (await action(client, "pin", workspaceId=project["id"],
+                           analysisId=payload["requestId"], pinned=True))["project"]
+    assert pinned["analyses"][0]["pinned"] is True
+    reloaded = (await action(client, "load", workspaceId=project["id"]))["project"]
+    assert reloaded["analyses"][0]["pinned"] is True
+    await action(client, "pin", workspaceId=project["id"],
+                 analysisId=payload["requestId"], pinned=False)
+    reloaded = (await action(client, "load", workspaceId=project["id"]))["project"]
+    assert reloaded["analyses"][0]["pinned"] is False
+    assert model.calls == calls and model.explanations == 1
 
 
 @pytest.mark.anyio

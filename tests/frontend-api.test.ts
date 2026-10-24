@@ -42,6 +42,17 @@ describe('frontend API boundary', () => {
     expect(result.preview.rowCount).toBe(12);
     expect(JSON.parse(fetch.mock.calls[0][1].body).action).toBe('tablePreview');
   });
+  it('saves pin state without a dataset revision and returns the server-confirmed state', async () => {
+    const pinned = { ...project, analyses: [{ id: 'answer-id', pinned: true }] };
+    const fetch = vi.fn().mockResolvedValue(Response.json({ project: pinned })); vi.stubGlobal('fetch', fetch);
+    const saved = await mutateProject(project, { action: 'pin', analysisId: 'answer-id', pinned: true });
+    expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual({ action: 'pin', workspaceId: project.id, analysisId: 'answer-id', pinned: true });
+    expect(saved.analyses[0].pinned).toBe(true);
+  });
+  it('surfaces a failed pin save instead of claiming it was pinned', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(Response.json({ error: 'Result not found.' }, { status: 404 })));
+    await expect(mutateProject(project, { action: 'pin', analysisId: 'missing', pinned: true })).rejects.toThrow('Result not found.');
+  });
   it('handles streamed events split across network chunks', async () => {
     const encoder = new TextEncoder();
     const text = JSON.stringify({ type: 'status', message: 'Working' }) + '\n' + JSON.stringify({ type: 'result', result: {}, requestId: 'r', analysisId: 'r', cached: false }) + '\n';

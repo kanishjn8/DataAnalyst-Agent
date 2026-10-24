@@ -95,3 +95,21 @@ select:not([multiple]):not([size]){appearance:none;-webkit-appearance:none;paddi
 .result details .markdown p{margin:6px 0}
 @media(max-width:1000px){.dashboard-cards{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.dashboard-selection{padding:20px 17px}.dashboard-selection .section-heading{flex-direction:column;gap:15px}.dashboard-selection .secondary{width:100%}.dashboard-table-options{grid-template-columns:minmax(0,1fr)}.dashboard-summary{padding:18px}.generation-progress{padding:17px}.dashboard-layout{gap:24px}}
+
+/* Pin state stays visible in Analysis and pinned answers lead the dashboard. */
+.pin-button{display:inline-flex;align-items:center;gap:6px}
+.pin-button[aria-pressed=true]{background:#eee9fa;border-color:#a795d0;color:#674e9d}
+.pin-button[aria-pressed=true]:hover{background:#e5dcf6}
+.pin-button:disabled,.pinned-answer-heading button:disabled{cursor:wait;opacity:.65}
+.result.is-pinned{border-color:#c7b9e2}
+.pin-feedback{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;padding:12px 14px;border:1px solid #d8e9df;border-radius:8px;background:#f1f8f4;color:#47785e;font-size:12px}
+.pin-feedback button{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.pinned-answers{margin-bottom:28px}
+.pinned-count{display:inline-block;margin-left:5px;padding:2px 7px;border-radius:5px;background:#eee9fa;color:#7960aa;font-size:11px}
+.pinned-empty{padding:20px;color:#8790a3;font-size:12px;line-height:1.8}
+.pinned-answer{min-width:0}
+.pinned-answer-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:9px}
+.pinned-answer-heading>p{font-size:12px;line-height:1.7;color:#6d627e;overflow-wrap:anywhere}
+.pinned-answer-heading>button{flex-shrink:0}
+.pinned-answer>.result{margin-bottom:0}
+@media(max-width:600px){.pin-feedback,.pinned-answer-heading{align-items:flex-start;flex-direction:column}}

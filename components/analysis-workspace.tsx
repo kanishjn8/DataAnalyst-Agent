@@ -14,6 +14,7 @@ import { signOut } from '@/lib/auth';
 import { DashboardPanel } from './dashboard-panel';
 import { useAccount } from './auth-boundary';
 import { GenerationProgress } from './generation-progress';
+import { PinnedAnswers } from './pinned-answers';
 
 const views = [
   { id: 'setup', label: 'Data setup', icon: 'database' },
@@ -41,6 +42,8 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
   const [preview, setPreview] = useState<{ id: string; version: number; data: PreparedView | null; error: string }>({ id: '', version: -1, data: null, error: '' });
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [steps, setSteps] = useState<string[]>([]), [streamText, setStreamText] = useState('');
   const [liveResults, setLiveResults] = useState<{ id: string; result: AnalysisResult }[]>([]);
+  const [pinningId, setPinningId] = useState<string | null>(null), [pinNotice, setPinNotice] = useState('');
+  const pinInFlight = useRef(false);
   const composer = useRef<HTMLTextAreaElement>(null), abort = useRef<AbortController | null>(null);
   const hasTables = project.tables.length > 0;
   const effectiveView = hasTables ? view : 'setup';
@@ -89,7 +92,13 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
     catch (error) { setError((error as Error).message); }
   }
   async function pin(id: string, pinned: boolean) {
-    try { await onAction({ action: 'pin', analysisId: id, pinned }); } catch (error) { setError((error as Error).message); }
+    if (pinInFlight.current || busy) return;
+    pinInFlight.current = true; setPinningId(id); setPinNotice(''); setError('');
+    try {
+      await onAction({ action: 'pin', analysisId: id, pinned });
+      setPinNotice(pinned ? 'Answer added to your dashboard.' : 'Answer removed from your dashboard.');
+    } catch (error) { setError((error as Error).message); }
+    finally { pinInFlight.current = false; setPinningId(null); }
   }
   const turns = project.analyses.filter(turn => !resultFilter || turn.result.tableId === resultFilter || turn.result.tableIds?.includes(resultFilter) || (!turn.result.tableId && project.tables.length === 1));
   return <div className="app-shell">
@@ -109,10 +118,10 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
       {effectiveView === 'analysis' && <div id="view-analysis" role="region" aria-label="Analysis">
         <div className="analysis-scope"><label className="table-picker">Ask about<select value={allTables || selectedTable ? tableId : ''} disabled={busy} onChange={event => { changeView('analysis', event.target.value); }}><option value="">Choose a table</option><option value="all">All tables</option>{project.tables.map(table => <option key={table.id} value={table.id}>{table.name}</option>)}</select></label><div><strong>{allTables ? 'Ask across your workspace' : selectedTable ? `${selectedTable.rowCount.toLocaleString()} rows · ${selectedTable.columns.length} columns` : 'Select a table to ask a question'}</strong><p>{allTables ? 'Uses the relevant tables and their connections to answer your question.' : 'Choose All tables to ask across your workspace.'}</p></div></div>
         <div className="questions-section"><div className="section-heading"><div><h2>What would you like to know?</h2><p>Questions use your selection. All tables gives one answer using the relevant data.</p></div></div><div className="suggestion-grid">{questions.map(item => <button key={item.title} className="suggestion" disabled={busy} onClick={() => { setQuestion(item.text); composer.current?.focus(); }}><span className={`suggestion-icon ${item.color}`}><Icon name={item.icon} size={19}/></span><span><strong>{item.title}</strong><small>{item.text}</small></span><Icon name="arrow" size={16}/></button>)}</div></div>
-        <div className="conversation-results">{resultFilter && <div className="findings-filter"><span>Findings for {project.tables.find(table => table.id === resultFilter)?.name}</span><button className="small" onClick={() => setResultFilter('')}>Show all findings</button></div>}{turns.map(turn => <article key={turn.id}><div className="question"><strong>You <span className="finding-table">{turn.result.tableName ?? 'Prepared table'}</span></strong><p>{turn.question}</p></div><ResultCard result={turn.result} onPin={() => void pin(turn.id, !turn.pinned)} onExport={() => void exportData('exportResult', turn.id)}/></article>)}{liveResults.filter(result => !project.analyses.some(turn => turn.id === result.id)).map(result => <ResultCard key={result.id} result={result.result}/>)}{busy && <GenerationProgress steps={steps} text={streamText}/>}{!!project.analyses.length && <button className="secondary" onClick={() => void exportData('exportReport')}>Export report</button>}</div>
+        <div className="conversation-results">{pinNotice && <div className="pin-feedback"><span role="status">{pinNotice}</span><button className="small" onClick={() => changeView('dashboard')}>View dashboard<Icon name="arrow" size={13}/></button></div>}{resultFilter && <div className="findings-filter"><span>Findings for {project.tables.find(table => table.id === resultFilter)?.name}</span><button className="small" onClick={() => setResultFilter('')}>Show all findings</button></div>}{turns.map(turn => <article key={turn.id}><div className="question"><strong>You <span className="finding-table">{turn.result.tableName ?? 'Prepared table'}</span></strong><p>{turn.question}</p></div><ResultCard result={turn.result} pinned={turn.pinned} pinPending={pinningId === turn.id} pinDisabled={busy || pinningId !== null} onPin={() => void pin(turn.id, !turn.pinned)} onExport={() => void exportData('exportResult', turn.id)}/></article>)}{liveResults.filter(result => !project.analyses.some(turn => turn.id === result.id)).map(result => <ResultCard key={result.id} result={result.result}/>)}{busy && <GenerationProgress steps={steps} text={streamText}/>}{!!project.analyses.length && <button className="secondary" onClick={() => void exportData('exportReport')}>Export report</button>}</div>
         <div className="composer-wrap"><form className="composer" onSubmit={event => { event.preventDefault(); void ask(tableId); }}><div className="composer-input"><Icon name="spark" size={20}/><label htmlFor="question" className="sr-only">Your question</label><textarea ref={composer} id="question" placeholder={allTables ? 'Ask about all tables…' : selectedTable ? `Ask about ${selectedTable.name}…` : 'Choose a table or All tables above…'} value={question} maxLength={1000} rows={2} onChange={event => setQuestion(event.target.value)} disabled={busy} onBlur={() => { if (!busy && question !== project.question) void onAction({ action: 'patch', question }).catch(() => {}); }}/></div><div className="composer-footer"><span>{capabilities.analysis ? allTables ? 'Using workspace context · relevant tables chosen for your question' : selectedTable ? `Using ${selectedTable.name}` : 'Choose a table before sending.' : 'Analysis is currently unavailable.'}</span>{busy ? <button type="button" className="secondary" onClick={() => abort.current?.abort()}>Stop</button> : <button className="send-button" disabled={!capabilities.analysis || !question.trim() || (!selectedTable && !allTables)}>Send<Icon name="arrow" size={17}/></button>}</div></form></div>
       </div>}
-      {effectiveView === 'dashboard' && <div id="view-dashboard" role="region" aria-label="Dashboard" className="dashboard-view"><DashboardPanel key={`${project.id}:${project.dataVersion}`} project={project} available={capabilities.analysis}/>{project.analyses.some(turn => turn.pinned) ? project.analyses.filter(turn => turn.pinned).map(turn => <div key={turn.id}><button className="small" onClick={() => void pin(turn.id, false)}>Remove from dashboard</button><ResultCard result={turn.result} onExport={() => void exportData('exportResult', turn.id)}/></div>) : null}</div>}
+      {effectiveView === 'dashboard' && <div id="view-dashboard" role="region" aria-label="Dashboard" className="dashboard-view"><PinnedAnswers findings={project.analyses} pendingId={pinningId} disabled={busy || pinningId !== null} onRemove={id => void pin(id, false)} onExport={id => void exportData('exportResult', id)}/><DashboardPanel key={`${project.id}:${project.dataVersion}`} project={project} available={capabilities.analysis}/></div>}
       </section></main><Footer/>
     </div>
   </div>;

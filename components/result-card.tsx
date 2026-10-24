@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { AnalysisResult, Chart, Row } from '@/shared/contracts';
 import { Markdown } from './markdown';
+import { Icon } from './icons';
 
 export function DataTable({ rows, limit = 20, totalRows = rows.length }: { rows: Row[]; limit?: number; totalRows?: number }) {
   if (!rows.length) return <p className="muted">No result rows.</p>;
@@ -24,13 +25,19 @@ function Plot({ chart }: { chart: Chart }) {
     </ResponsiveContainer>
   </div>;
 }
-export function ResultCard({ result, onPin, onExport }: { result: AnalysisResult; onPin?: () => void; onExport?: () => void }) {
+export function ResultCard({ result, onPin, onExport, pinned = false, pinPending = false, pinDisabled = false }: {
+  result: AnalysisResult; onPin?: () => void; onExport?: () => void;
+  pinned?: boolean; pinPending?: boolean; pinDisabled?: boolean;
+}) {
   const [copied, setCopied] = useState(false);
   const hasRows = result.rows.length > 0 || result.sections?.some(section => section.rows.length > 0);
-  return <section className="result">
+  return <section className={`result${pinned ? ' is-pinned' : ''}`}>
     {result.tableName && <p className="result-table-label">{result.tableName}</p>}
     <div className="section-heading"><h3>{result.title}</h3><div className="actions">
-      {onPin && <button className="small" onClick={onPin}>Pin to dashboard</button>}
+      {onPin && <button className="small pin-button" aria-pressed={pinned} aria-busy={pinPending} disabled={pinDisabled || pinPending}
+        title={pinned ? 'Click to remove this answer from your dashboard' : 'Save this answer to your dashboard'} onClick={onPin}>
+        {pinned && <Icon name="check" size={13}/>}{pinPending ? pinned ? 'Removing…' : 'Pinning…' : pinned ? 'Pinned to dashboard' : 'Pin to dashboard'}
+      </button>}
       {hasRows && onExport && <button className="small" onClick={onExport}>Export CSV</button>}
     </div></div>
     {result.answer && <div className="answer"><Markdown>{result.answer}</Markdown></div>}
