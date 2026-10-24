@@ -1,10 +1,19 @@
-# Data analysis workspace
+<img width="1464" height="801" alt="image" src="https://github.com/user-attachments/assets/4399cf9e-3cc1-4f30-8fac-42eb4f0b96a2" /># Data analysis workspace
 
 Upload CSV files, connect related tables, and ask questions about your data in plain language. The app can summarize results, create charts, flag statistical anomalies, and show the SQL and calculation method behind an answer.
 
 [Open the live app](https://data-analyst-agent-livid.vercel.app)
 
 [Sample Datasets](datasets)
+
+## Screenshots
+<img width="1469" height="800" alt="image" src="https://github.com/user-attachments/assets/b708488e-2a2d-40d4-a0c2-f95150631721" />
+
+<img width="1470" height="800" alt="image" src="https://github.com/user-attachments/assets/266a6243-e199-41e8-80ee-48a01eb32c92" />
+
+<img width="1470" height="801" alt="image" src="https://github.com/user-attachments/assets/06e895ef-44d9-407f-bd7b-03a59c8d2c3b" />
+
+<img width="1470" height="799" alt="image" src="https://github.com/user-attachments/assets/0d5365d5-acc9-4a66-969b-acaea80b5ea3" />
 
 ## How to use it
 
