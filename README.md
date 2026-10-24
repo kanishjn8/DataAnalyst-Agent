@@ -6,6 +6,8 @@ Upload CSV files, connect related tables, and ask questions about your data in p
 
 [Sample Datasets](datasets)
 
+[Demo Video](https://drive.google.com/file/d/1zSkk67wzaZ8pI6EIzj1jYVaZNuYm6Jbf/view?usp=sharing)
+
 ## Screenshots
 <img width="1469" height="800" alt="image" src="https://github.com/user-attachments/assets/b708488e-2a2d-40d4-a0c2-f95150631721" />
 
