@@ -1,0 +1,251 @@
+vehicle_id,vehicle_make_model,vehicle_type,fuel_type,base_hub,max_capacity_tons,operating_cost_per_km,billing_rate_per_km,odometer_km,is_active
+VEH-0001,Mahindra Electric Delivery Van 2022,Electric Delivery Van,Electric,Chennai Hub,2.4,0.26,0.37,233745,True
+VEH-0002,Eicher Box Truck 2023,Box Truck,Diesel,Delhi NCR Hub,13.3,1.13,1.88,126861,True
+VEH-0003,Mahindra Electric Delivery Van 2019,Electric Delivery Van,Electric,Hyderabad Hub,1.5,0.49,0.85,236325,True
+VEH-0004,BharatBenz Box Truck 2021,Box Truck,Diesel,Chennai Hub,13.6,1.52,2.22,20436,True
+VEH-0005,Eicher Box Truck 2019,Box Truck,Diesel,Hyderabad Hub,12.0,1.6,2.25,157531,True
+VEH-0006,Eicher Refrigerated Van 2021,Refrigerated Van,Diesel,Pune Hub,8.1,1.53,2.56,192828,True
+VEH-0007,Isuzu Box Truck 2023,Box Truck,Diesel,Delhi NCR Hub,14.2,1.61,2.26,253011,False
+VEH-0008,Isuzu Box Truck 2020,Box Truck,Diesel,Delhi NCR Hub,15.8,1.63,2.46,89466,True
+VEH-0009,Ashok Leyland Box Truck 2021,Box Truck,Diesel,Delhi NCR Hub,16.6,1.08,1.46,88798,True
+VEH-0010,Scania Heavy Duty Truck 2022,Heavy Duty Truck,Diesel,Kolkata Hub,28.6,1.74,2.86,51217,True
+VEH-0011,Mercedes-Benz Cargo Van 2021,Cargo Van,CNG/Diesel,Pune Hub,2.3,0.53,0.86,238073,True
+VEH-0012,Switch Electric Delivery Van 2023,Electric Delivery Van,Electric,Hyderabad Hub,3.2,0.53,0.82,261709,True
+VEH-0013,Ashok Leyland Box Truck 2024,Box Truck,Diesel,Delhi NCR Hub,10.6,1.0,1.37,98550,True
+VEH-0014,Eicher Box Truck 2023,Box Truck,Diesel,Ahmedabad Hub,15.6,1.19,2.07,241473,True
+VEH-0015,Eicher Box Truck 2022,Box Truck,Diesel,Kolkata Hub,12.8,1.54,2.14,304386,True
+VEH-0016,Tata Refrigerated Van 2022,Refrigerated Van,Diesel,Pune Hub,7.7,1.58,2.26,306595,True
+VEH-0017,Ford Cargo Van 2020,Cargo Van,CNG/Diesel,Chennai Hub,1.7,1.0,1.38,170507,True
+VEH-0018,Ford Cargo Van 2025,Cargo Van,CNG/Diesel,Hyderabad Hub,2.8,0.51,0.86,219959,True
+VEH-0019,Mahindra Electric Delivery Van 2023,Electric Delivery Van,Electric,Mumbai Hub,2.8,0.45,0.73,217796,True
+VEH-0020,BharatBenz Box Truck 2019,Box Truck,Diesel,Hyderabad Hub,9.6,1.72,2.52,290321,True
+VEH-0021,Tata Heavy Duty Truck 2022,Heavy Duty Truck,Diesel,Ahmedabad Hub,19.9,1.88,2.82,261658,True
+VEH-0022,Tata Cargo Van 2023,Cargo Van,CNG/Diesel,Kolkata Hub,4.8,0.91,1.32,190799,True
+VEH-0023,Isuzu Refrigerated Van 2025,Refrigerated Van,Diesel,Hyderabad Hub,6.9,1.0,1.64,69493,True
+VEH-0024,Tata Refrigerated Van 2025,Refrigerated Van,Diesel,Mumbai Hub,9.9,1.08,1.48,208409,True
+VEH-0025,Volvo Heavy Duty Truck 2020,Heavy Duty Truck,Diesel,Mumbai Hub,19.5,2.02,3.0,39653,True
+VEH-0026,Switch Electric Delivery Van 2021,Electric Delivery Van,Electric,Kolkata Hub,2.4,0.42,0.58,258823,True
+VEH-0027,BharatBenz Heavy Duty Truck 2025,Heavy Duty Truck,Diesel,Kolkata Hub,30.6,1.33,2.17,13551,True
+VEH-0028,Eicher Refrigerated Van 2024,Refrigerated Van,Diesel,Delhi NCR Hub,10.1,1.39,2.34,244627,True
+VEH-0029,Euler Electric Delivery Van 2020,Electric Delivery Van,Electric,Bengaluru Hub,1.8,0.4,0.57,81134,True
+VEH-0030,Tata Heavy Duty Truck 2020,Heavy Duty Truck,Diesel,Hyderabad Hub,16.6,2.41,3.75,303853,True
+VEH-0031,Mahindra Cargo Van 2023,Cargo Van,CNG/Diesel,Pune Hub,2.4,0.86,1.32,115409,True
+VEH-0032,BharatBenz Heavy Duty Truck 2022,Heavy Duty Truck,Diesel,Chennai Hub,20.6,2.15,3.59,154237,True
+VEH-0033,Eicher Box Truck 2023,Box Truck,Diesel,Delhi NCR Hub,13.8,1.17,1.88,121642,True
+VEH-0034,Force Cargo Van 2025,Cargo Van,CNG/Diesel,Pune Hub,4.7,0.72,1.02,43971,True
+VEH-0035,Mercedes-Benz Cargo Van 2024,Cargo Van,CNG/Diesel,Hyderabad Hub,1.5,0.62,1.07,157596,True
+VEH-0036,BharatBenz Box Truck 2022,Box Truck,Diesel,Ahmedabad Hub,17.7,1.48,2.46,135001,True
+VEH-0037,BharatBenz Heavy Duty Truck 2025,Heavy Duty Truck,Diesel,Chennai Hub,27.1,1.8,2.8,278718,True
+VEH-0038,Mahindra Refrigerated Van 2023,Refrigerated Van,Diesel,Hyderabad Hub,7.1,1.07,1.52,164399,True
+VEH-0039,Mahindra Refrigerated Van 2025,Refrigerated Van,Diesel,Mumbai Hub,5.8,1.18,2.06,168841,True
+VEH-0040,Ashok Leyland Box Truck 2024,Box Truck,Diesel,Mumbai Hub,11.7,1.21,1.85,229855,True
+VEH-0041,Mercedes-Benz Cargo Van 2025,Cargo Van,CNG/Diesel,Hyderabad Hub,4.1,0.58,0.92,107911,True
+VEH-0042,BharatBenz Box Truck 2019,Box Truck,Diesel,Chennai Hub,17.5,0.99,1.51,131450,True
+VEH-0043,Ford Cargo Van 2020,Cargo Van,CNG/Diesel,Bengaluru Hub,2.8,0.72,1.06,182107,True
+VEH-0044,Force Cargo Van 2023,Cargo Van,CNG/Diesel,Chennai Hub,1.5,0.84,1.16,299906,False
+VEH-0045,Ashok Leyland Box Truck 2025,Box Truck,Diesel,Mumbai Hub,15.5,1.34,1.87,85876,True
+VEH-0046,Tata Refrigerated Van 2021,Refrigerated Van,Diesel,Pune Hub,3.8,1.53,2.07,143511,True
+VEH-0047,Eicher Refrigerated Van 2025,Refrigerated Van,Diesel,Pune Hub,4.4,1.55,2.18,148864,True
+VEH-0048,Force Refrigerated Van 2022,Refrigerated Van,Diesel,Pune Hub,10.8,1.36,2.14,298716,True
+VEH-0049,Ford Cargo Van 2019,Cargo Van,CNG/Diesel,Kolkata Hub,2.7,0.92,1.35,145106,True
+VEH-0050,Force Refrigerated Van 2019,Refrigerated Van,Diesel,Delhi NCR Hub,11.6,1.38,2.17,140843,True
+VEH-0051,Isuzu Refrigerated Van 2021,Refrigerated Van,Diesel,Chennai Hub,9.9,1.35,2.27,85761,True
+VEH-0052,Force Cargo Van 2022,Cargo Van,CNG/Diesel,Hyderabad Hub,1.7,0.57,0.94,121568,True
+VEH-0053,Isuzu Refrigerated Van 2024,Refrigerated Van,Diesel,Delhi NCR Hub,4.1,0.95,1.41,153361,True
+VEH-0054,Isuzu Box Truck 2022,Box Truck,Diesel,Mumbai Hub,11.6,1.18,2.04,58775,False
+VEH-0055,Mahindra Refrigerated Van 2024,Refrigerated Van,Diesel,Chennai Hub,6.4,1.48,2.22,284068,True
+VEH-0056,Ashok Leyland Box Truck 2019,Box Truck,Diesel,Mumbai Hub,16.6,0.92,1.5,156490,True
+VEH-0057,Tata Cargo Van 2025,Cargo Van,CNG/Diesel,Delhi NCR Hub,4.0,0.89,1.54,25646,True
+VEH-0058,Scania Heavy Duty Truck 2023,Heavy Duty Truck,Diesel,Mumbai Hub,20.2,2.45,3.93,89567,True
+VEH-0059,Scania Heavy Duty Truck 2023,Heavy Duty Truck,Diesel,Kolkata Hub,29.7,2.35,4.11,30288,True
+VEH-0060,Tata Cargo Van 2020,Cargo Van,CNG/Diesel,Bengaluru Hub,3.7,0.57,0.92,36583,False
+VEH-0061,Eicher Box Truck 2022,Box Truck,Diesel,Mumbai Hub,9.1,1.0,1.74,95497,True
+VEH-0062,Tata Cargo Van 2019,Cargo Van,CNG/Diesel,Pune Hub,3.8,0.76,1.24,98068,False
+VEH-0063,BharatBenz Heavy Duty Truck 2021,Heavy Duty Truck,Diesel,Kolkata Hub,18.2,2.35,3.37,298736,True
+VEH-0064,Tata Cargo Van 2019,Cargo Van,CNG/Diesel,Pune Hub,4.8,0.82,1.39,287022,True
+VEH-0065,Isuzu Refrigerated Van 2019,Refrigerated Van,Diesel,Ahmedabad Hub,7.3,0.94,1.44,81323,False
+VEH-0066,Ashok Leyland Heavy Duty Truck 2021,Heavy Duty Truck,Diesel,Mumbai Hub,37.2,1.21,1.68,187888,True
+VEH-0067,Force Refrigerated Van 2023,Refrigerated Van,Diesel,Delhi NCR Hub,6.1,1.49,2.03,163082,True
+VEH-0068,Tata Electric Delivery Van 2023,Electric Delivery Van,Electric,Delhi NCR Hub,3.4,0.26,0.45,246627,True
+VEH-0069,Eicher Refrigerated Van 2021,Refrigerated Van,Diesel,Bengaluru Hub,6.3,1.54,2.13,45623,True
+VEH-0070,Mahindra Electric Delivery Van 2025,Electric Delivery Van,Electric,Kolkata Hub,2.3,0.41,0.7,31788,True
+VEH-0071,Mahindra Refrigerated Van 2021,Refrigerated Van,Diesel,Delhi NCR Hub,4.3,1.5,2.57,190185,True
+VEH-0072,Mahindra Electric Delivery Van 2019,Electric Delivery Van,Electric,Pune Hub,2.6,0.29,0.49,294916,True
+VEH-0073,Tata Electric Delivery Van 2025,Electric Delivery Van,Electric,Chennai Hub,2.4,0.31,0.5,263772,True
+VEH-0074,Mahindra Electric Delivery Van 2021,Electric Delivery Van,Electric,Kolkata Hub,2.6,0.45,0.69,303435,True
+VEH-0075,Mahindra Refrigerated Van 2025,Refrigerated Van,Diesel,Pune Hub,5.3,0.93,1.51,165652,True
+VEH-0076,Scania Heavy Duty Truck 2021,Heavy Duty Truck,Diesel,Pune Hub,35.0,1.83,3.08,135671,True
+VEH-0077,Mahindra Cargo Van 2023,Cargo Van,CNG/Diesel,Bengaluru Hub,3.7,0.72,1.05,189190,True
+VEH-0078,Volvo Heavy Duty Truck 2022,Heavy Duty Truck,Diesel,Hyderabad Hub,38.4,1.32,1.9,174544,True
+VEH-0079,Tata Electric Delivery Van 2024,Electric Delivery Van,Electric,Pune Hub,1.9,0.4,0.55,98713,False
+VEH-0080,Force Cargo Van 2021,Cargo Van,CNG/Diesel,Delhi NCR Hub,4.2,0.54,0.87,171094,True
+VEH-0081,Isuzu Refrigerated Van 2023,Refrigerated Van,Diesel,Ahmedabad Hub,7.9,1.36,2.25,241050,True
+VEH-0082,Force Refrigerated Van 2024,Refrigerated Van,Diesel,Mumbai Hub,5.1,1.01,1.59,252996,True
+VEH-0083,Force Refrigerated Van 2021,Refrigerated Van,Diesel,Ahmedabad Hub,11.2,1.11,1.93,195786,True
+VEH-0084,Isuzu Refrigerated Van 2020,Refrigerated Van,Diesel,Delhi NCR Hub,11.9,1.02,1.4,186682,True
+VEH-0085,Isuzu Refrigerated Van 2023,Refrigerated Van,Diesel,Bengaluru Hub,9.7,1.39,2.31,293059,True
+VEH-0086,Mahindra Electric Delivery Van 2022,Electric Delivery Van,Electric,Kolkata Hub,3.3,0.28,0.46,237082,True
+VEH-0087,Ashok Leyland Box Truck 2020,Box Truck,Diesel,Delhi NCR Hub,13.5,1.72,2.8,68851,True
+VEH-0088,Ford Cargo Van 2020,Cargo Van,CNG/Diesel,Delhi NCR Hub,3.7,0.98,1.7,162633,True
+VEH-0089,Ford Cargo Van 2020,Cargo Van,CNG/Diesel,Delhi NCR Hub,2.9,0.67,1.14,115500,True
+VEH-0090,Tata Cargo Van 2019,Cargo Van,CNG/Diesel,Hyderabad Hub,3.5,0.98,1.68,273272,True
+VEH-0091,Scania Heavy Duty Truck 2023,Heavy Duty Truck,Diesel,Bengaluru Hub,17.3,1.7,2.75,317244,True
+VEH-0092,Tata Cargo Van 2024,Cargo Van,CNG/Diesel,Chennai Hub,4.7,0.88,1.23,261167,True
+VEH-0093,Isuzu Box Truck 2025,Box Truck,Diesel,Mumbai Hub,12.6,1.29,1.84,5523,True
+VEH-0094,Isuzu Box Truck 2019,Box Truck,Diesel,Pune Hub,7.9,1.47,2.42,246777,False
+VEH-0095,Mahindra Refrigerated Van 2020,Refrigerated Van,Diesel,Chennai Hub,10.1,1.45,2.31,84398,True
+VEH-0096,Eicher Box Truck 2025,Box Truck,Diesel,Ahmedabad Hub,12.5,1.38,1.88,74056,True
+VEH-0097,Ashok Leyland Heavy Duty Truck 2021,Heavy Duty Truck,Diesel,Mumbai Hub,29.9,1.99,3.07,125625,True
+VEH-0098,Mahindra Refrigerated Van 2019,Refrigerated Van,Diesel,Ahmedabad Hub,10.5,1.1,1.61,68053,True
+VEH-0099,Isuzu Refrigerated Van 2024,Refrigerated Van,Diesel,Ahmedabad Hub,4.7,1.26,2.08,114335,True
+VEH-0100,Tata Heavy Duty Truck 2024,Heavy Duty Truck,Diesel,Ahmedabad Hub,17.7,1.38,2.2,112945,True
+VEH-0101,Isuzu Box Truck 2022,Box Truck,Diesel,Chennai Hub,9.3,1.15,1.68,295949,True
+VEH-0102,Tata Refrigerated Van 2023,Refrigerated Van,Diesel,Hyderabad Hub,3.6,1.36,2.2,309405,True
+VEH-0103,BharatBenz Box Truck 2023,Box Truck,Diesel,Bengaluru Hub,11.4,0.98,1.33,183491,True
+VEH-0104,Euler Electric Delivery Van 2022,Electric Delivery Van,Electric,Hyderabad Hub,1.2,0.46,0.78,248587,True
+VEH-0105,Isuzu Refrigerated Van 2024,Refrigerated Van,Diesel,Mumbai Hub,8.6,1.26,2.11,317622,True
+VEH-0106,BharatBenz Heavy Duty Truck 2024,Heavy Duty Truck,Diesel,Pune Hub,27.1,1.55,2.47,295223,True
+VEH-0107,Scania Heavy Duty Truck 2025,Heavy Duty Truck,Diesel,Hyderabad Hub,22.5,1.48,2.01,165046,True
+VEH-0108,Isuzu Box Truck 2021,Box Truck,Diesel,Hyderabad Hub,17.8,1.17,1.92,19971,False
+VEH-0109,Force Refrigerated Van 2019,Refrigerated Van,Diesel,Kolkata Hub,3.8,1.07,1.55,124513,True
+VEH-0110,Eicher Refrigerated Van 2021,Refrigerated Van,Diesel,Kolkata Hub,4.9,1.52,2.56,141165,True
+VEH-0111,Scania Heavy Duty Truck 2020,Heavy Duty Truck,Diesel,Pune Hub,16.7,2.19,3.34,82792,True
+VEH-0112,Euler Electric Delivery Van 2023,Electric Delivery Van,Electric,Pune Hub,2.2,0.42,0.65,219724,False
+VEH-0113,Tata Electric Delivery Van 2021,Electric Delivery Van,Electric,Kolkata Hub,2.5,0.48,0.82,59730,True
+VEH-0114,Force Cargo Van 2021,Cargo Van,CNG/Diesel,Ahmedabad Hub,5.0,0.77,1.34,291784,True
+VEH-0115,Mahindra Refrigerated Van 2025,Refrigerated Van,Diesel,Delhi NCR Hub,3.6,1.13,1.7,89138,True
+VEH-0116,Euler Electric Delivery Van 2022,Electric Delivery Van,Electric,Ahmedabad Hub,1.7,0.46,0.77,177555,True
+VEH-0117,Mahindra Refrigerated Van 2022,Refrigerated Van,Diesel,Chennai Hub,3.8,1.41,2.03,32993,True
+VEH-0118,Tata Electric Delivery Van 2021,Electric Delivery Van,Electric,Mumbai Hub,1.2,0.38,0.63,228640,True
+VEH-0119,Force Refrigerated Van 2025,Refrigerated Van,Diesel,Bengaluru Hub,5.1,1.29,1.93,225911,True
+VEH-0120,Mahindra Electric Delivery Van 2024,Electric Delivery Van,Electric,Hyderabad Hub,2.9,0.46,0.74,207109,True
+VEH-0121,Mahindra Electric Delivery Van 2025,Electric Delivery Van,Electric,Pune Hub,2.9,0.35,0.54,145175,True
+VEH-0122,Eicher Refrigerated Van 2019,Refrigerated Van,Diesel,Mumbai Hub,4.8,0.97,1.54,13257,True
+VEH-0123,Mahindra Electric Delivery Van 2021,Electric Delivery Van,Electric,Kolkata Hub,2.2,0.28,0.48,137125,True
+VEH-0124,BharatBenz Heavy Duty Truck 2023,Heavy Duty Truck,Diesel,Bengaluru Hub,38.9,1.66,2.45,200320,True
+VEH-0125,Ashok Leyland Box Truck 2024,Box Truck,Diesel,Hyderabad Hub,15.3,1.23,2.02,33946,True
+VEH-0126,Eicher Refrigerated Van 2020,Refrigerated Van,Diesel,Bengaluru Hub,7.7,1.34,2.09,31712,False
+VEH-0127,Isuzu Refrigerated Van 2025,Refrigerated Van,Diesel,Ahmedabad Hub,10.3,1.59,2.32,35071,True
+VEH-0128,Eicher Box Truck 2019,Box Truck,Diesel,Bengaluru Hub,13.5,1.4,2.43,231128,True
+VEH-0129,Ford Cargo Van 2024,Cargo Van,CNG/Diesel,Hyderabad Hub,4.2,0.73,1.28,94617,False
+VEH-0130,Mahindra Refrigerated Van 2025,Refrigerated Van,Diesel,Mumbai Hub,8.3,1.51,2.47,46362,True
+VEH-0131,Ford Cargo Van 2021,Cargo Van,CNG/Diesel,Bengaluru Hub,3.5,0.6,0.92,210901,True
+VEH-0132,Mercedes-Benz Cargo Van 2023,Cargo Van,CNG/Diesel,Bengaluru Hub,2.5,0.83,1.44,164454,True
+VEH-0133,BharatBenz Box Truck 2024,Box Truck,Diesel,Delhi NCR Hub,14.4,1.05,1.59,137877,True
+VEH-0134,Mercedes-Benz Cargo Van 2021,Cargo Van,CNG/Diesel,Chennai Hub,4.8,0.85,1.3,54061,True
+VEH-0135,Mahindra Cargo Van 2021,Cargo Van,CNG/Diesel,Chennai Hub,4.2,0.92,1.32,87339,True
+VEH-0136,Tata Refrigerated Van 2022,Refrigerated Van,Diesel,Hyderabad Hub,11.9,1.49,2.28,23011,True
+VEH-0137,Force Cargo Van 2022,Cargo Van,CNG/Diesel,Ahmedabad Hub,2.8,0.63,0.95,29093,True
+VEH-0138,Eicher Refrigerated Van 2019,Refrigerated Van,Diesel,Mumbai Hub,7.3,1.24,1.88,292565,True
+VEH-0139,Eicher Box Truck 2024,Box Truck,Diesel,Ahmedabad Hub,15.1,1.52,2.24,84737,True
+VEH-0140,Force Refrigerated Van 2021,Refrigerated Van,Diesel,Delhi NCR Hub,9.2,0.93,1.63,27310,True
+VEH-0141,Ashok Leyland Box Truck 2020,Box Truck,Diesel,Delhi NCR Hub,10.8,1.2,1.96,53740,True
+VEH-0142,Mahindra Refrigerated Van 2024,Refrigerated Van,Diesel,Pune Hub,3.9,1.02,1.47,264904,True
+VEH-0143,Ashok Leyland Box Truck 2022,Box Truck,Diesel,Mumbai Hub,16.4,1.1,1.71,297103,True
+VEH-0144,Mercedes-Benz Cargo Van 2024,Cargo Van,CNG/Diesel,Bengaluru Hub,2.4,1.04,1.61,59772,True
+VEH-0145,Euler Electric Delivery Van 2025,Electric Delivery Van,Electric,Mumbai Hub,2.6,0.49,0.86,222231,False
+VEH-0146,Switch Electric Delivery Van 2021,Electric Delivery Van,Electric,Pune Hub,1.5,0.47,0.72,315664,True
+VEH-0147,Eicher Refrigerated Van 2025,Refrigerated Van,Diesel,Hyderabad Hub,8.6,1.3,1.96,280936,False
+VEH-0148,Tata Heavy Duty Truck 2025,Heavy Duty Truck,Diesel,Mumbai Hub,24.9,1.89,2.66,6720,True
+VEH-0149,Isuzu Box Truck 2019,Box Truck,Diesel,Delhi NCR Hub,8.8,1.35,2.02,135187,True
+VEH-0150,Euler Electric Delivery Van 2024,Electric Delivery Van,Electric,Bengaluru Hub,1.1,0.37,0.62,167533,True
+VEH-0151,Force Refrigerated Van 2023,Refrigerated Van,Diesel,Bengaluru Hub,7.9,1.34,1.92,98833,True
+VEH-0152,Scania Heavy Duty Truck 2025,Heavy Duty Truck,Diesel,Kolkata Hub,35.1,2.13,3.64,141031,True
+VEH-0153,Force Refrigerated Van 2021,Refrigerated Van,Diesel,Kolkata Hub,7.5,1.37,2.15,122993,True
+VEH-0154,Ford Cargo Van 2024,Cargo Van,CNG/Diesel,Ahmedabad Hub,1.8,0.58,0.98,207743,True
+VEH-0155,Isuzu Box Truck 2024,Box Truck,Diesel,Mumbai Hub,11.0,1.59,2.25,196837,True
+VEH-0156,Mahindra Cargo Van 2020,Cargo Van,CNG/Diesel,Mumbai Hub,2.9,0.93,1.43,161092,True
+VEH-0157,Ashok Leyland Heavy Duty Truck 2019,Heavy Duty Truck,Diesel,Chennai Hub,22.4,2.27,3.89,244602,True
+VEH-0158,Switch Electric Delivery Van 2019,Electric Delivery Van,Electric,Pune Hub,2.0,0.3,0.44,63499,True
+VEH-0159,Volvo Heavy Duty Truck 2024,Heavy Duty Truck,Diesel,Kolkata Hub,17.5,2.29,3.96,87352,True
+VEH-0160,Isuzu Box Truck 2025,Box Truck,Diesel,Delhi NCR Hub,17.4,1.64,2.76,223545,True
+VEH-0161,Mercedes-Benz Cargo Van 2023,Cargo Van,CNG/Diesel,Bengaluru Hub,4.5,0.88,1.19,300487,True
+VEH-0162,Mahindra Electric Delivery Van 2021,Electric Delivery Van,Electric,Bengaluru Hub,1.2,0.36,0.56,69791,True
+VEH-0163,Switch Electric Delivery Van 2019,Electric Delivery Van,Electric,Hyderabad Hub,1.1,0.44,0.71,136663,True
+VEH-0164,Tata Electric Delivery Van 2021,Electric Delivery Van,Electric,Bengaluru Hub,2.6,0.43,0.61,181479,True
+VEH-0165,Tata Cargo Van 2025,Cargo Van,CNG/Diesel,Mumbai Hub,3.0,0.97,1.47,12670,True
+VEH-0166,Tata Refrigerated Van 2025,Refrigerated Van,Diesel,Ahmedabad Hub,4.0,1.11,1.6,13908,True
+VEH-0167,Tata Cargo Van 2019,Cargo Van,CNG/Diesel,Hyderabad Hub,1.7,0.99,1.47,102038,True
+VEH-0168,Tata Cargo Van 2024,Cargo Van,CNG/Diesel,Chennai Hub,2.5,0.87,1.43,241597,False
+VEH-0169,Isuzu Refrigerated Van 2020,Refrigerated Van,Diesel,Delhi NCR Hub,9.4,0.91,1.5,82509,False
+VEH-0170,Eicher Box Truck 2024,Box Truck,Diesel,Mumbai Hub,12.8,1.72,2.8,293456,True
+VEH-0171,Force Cargo Van 2020,Cargo Van,CNG/Diesel,Delhi NCR Hub,2.6,0.76,1.18,190083,True
+VEH-0172,Force Refrigerated Van 2021,Refrigerated Van,Diesel,Bengaluru Hub,7.1,1.58,2.15,51989,False
+VEH-0173,Ashok Leyland Heavy Duty Truck 2019,Heavy Duty Truck,Diesel,Pune Hub,35.5,2.49,3.96,220453,True
+VEH-0174,Tata Cargo Van 2024,Cargo Van,CNG/Diesel,Hyderabad Hub,3.8,0.64,0.95,200931,False
+VEH-0175,Force Refrigerated Van 2021,Refrigerated Van,Diesel,Mumbai Hub,6.6,1.48,2.06,208475,True
+VEH-0176,Eicher Refrigerated Van 2022,Refrigerated Van,Diesel,Mumbai Hub,8.2,1.19,1.61,129659,True
+VEH-0177,Tata Electric Delivery Van 2025,Electric Delivery Van,Electric,Hyderabad Hub,2.1,0.3,0.47,246214,True
+VEH-0178,Euler Electric Delivery Van 2019,Electric Delivery Van,Electric,Pune Hub,1.5,0.4,0.59,66822,True
+VEH-0179,Isuzu Box Truck 2023,Box Truck,Diesel,Pune Hub,14.1,1.27,1.95,206252,True
+VEH-0180,Ashok Leyland Box Truck 2023,Box Truck,Diesel,Ahmedabad Hub,11.4,1.31,1.93,202032,True
+VEH-0181,Mahindra Cargo Van 2022,Cargo Van,CNG/Diesel,Pune Hub,4.0,0.69,1.13,307048,True
+VEH-0182,Tata Electric Delivery Van 2020,Electric Delivery Van,Electric,Hyderabad Hub,2.4,0.54,0.76,170267,True
+VEH-0183,Tata Cargo Van 2021,Cargo Van,CNG/Diesel,Kolkata Hub,4.6,0.9,1.44,88117,True
+VEH-0184,Scania Heavy Duty Truck 2023,Heavy Duty Truck,Diesel,Delhi NCR Hub,29.8,2.22,3.12,193109,True
+VEH-0185,Mahindra Refrigerated Van 2025,Refrigerated Van,Diesel,Delhi NCR Hub,3.9,0.92,1.26,190778,True
+VEH-0186,BharatBenz Box Truck 2024,Box Truck,Diesel,Pune Hub,14.2,0.99,1.66,313225,True
+VEH-0187,BharatBenz Heavy Duty Truck 2024,Heavy Duty Truck,Diesel,Bengaluru Hub,27.5,1.62,2.72,175900,False
+VEH-0188,Switch Electric Delivery Van 2023,Electric Delivery Van,Electric,Delhi NCR Hub,3.2,0.4,0.67,278988,True
+VEH-0189,Ashok Leyland Box Truck 2019,Box Truck,Diesel,Pune Hub,16.4,1.18,2.01,250058,False
+VEH-0190,Force Refrigerated Van 2022,Refrigerated Van,Diesel,Chennai Hub,11.3,1.24,1.84,129173,True
+VEH-0191,Mahindra Refrigerated Van 2024,Refrigerated Van,Diesel,Delhi NCR Hub,8.4,1.15,1.83,273694,True
+VEH-0192,Switch Electric Delivery Van 2024,Electric Delivery Van,Electric,Mumbai Hub,2.6,0.33,0.45,42296,True
+VEH-0193,Force Refrigerated Van 2022,Refrigerated Van,Diesel,Mumbai Hub,7.7,1.19,2.05,265479,True
+VEH-0194,Eicher Box Truck 2025,Box Truck,Diesel,Bengaluru Hub,17.4,1.1,1.87,12697,True
+VEH-0195,Eicher Box Truck 2023,Box Truck,Diesel,Delhi NCR Hub,8.6,0.91,1.23,191064,True
+VEH-0196,Eicher Refrigerated Van 2025,Refrigerated Van,Diesel,Kolkata Hub,10.3,1.17,1.62,263785,True
+VEH-0197,Scania Heavy Duty Truck 2021,Heavy Duty Truck,Diesel,Bengaluru Hub,20.3,1.78,2.81,220108,True
+VEH-0198,BharatBenz Box Truck 2025,Box Truck,Diesel,Ahmedabad Hub,14.3,1.53,2.4,286023,True
+VEH-0199,Switch Electric Delivery Van 2025,Electric Delivery Van,Electric,Pune Hub,1.7,0.27,0.47,95381,True
+VEH-0200,BharatBenz Heavy Duty Truck 2022,Heavy Duty Truck,Diesel,Mumbai Hub,39.4,1.3,2.27,177739,False
+VEH-0201,BharatBenz Box Truck 2021,Box Truck,Diesel,Kolkata Hub,9.7,1.5,2.06,70061,True
+VEH-0202,Force Refrigerated Van 2020,Refrigerated Van,Diesel,Kolkata Hub,11.6,1.59,2.76,255293,True
+VEH-0203,Tata Heavy Duty Truck 2022,Heavy Duty Truck,Diesel,Pune Hub,30.3,1.58,2.58,37174,True
+VEH-0204,BharatBenz Box Truck 2021,Box Truck,Diesel,Delhi NCR Hub,12.9,1.7,2.89,260963,True
+VEH-0205,Mahindra Refrigerated Van 2020,Refrigerated Van,Diesel,Mumbai Hub,8.0,1.5,2.23,95114,True
+VEH-0206,Force Refrigerated Van 2022,Refrigerated Van,Diesel,Delhi NCR Hub,10.7,0.93,1.38,215807,True
+VEH-0207,Mercedes-Benz Cargo Van 2021,Cargo Van,CNG/Diesel,Kolkata Hub,3.4,1.01,1.44,221617,True
+VEH-0208,Volvo Heavy Duty Truck 2024,Heavy Duty Truck,Diesel,Mumbai Hub,28.6,1.52,2.32,127050,True
+VEH-0209,Tata Refrigerated Van 2024,Refrigerated Van,Diesel,Delhi NCR Hub,10.9,1.5,2.09,180000,True
+VEH-0210,Ashok Leyland Box Truck 2023,Box Truck,Diesel,Pune Hub,15.9,0.99,1.71,153454,True
+VEH-0211,Ford Cargo Van 2021,Cargo Van,CNG/Diesel,Delhi NCR Hub,2.5,0.64,0.97,242335,True
+VEH-0212,Force Cargo Van 2023,Cargo Van,CNG/Diesel,Bengaluru Hub,4.3,0.73,0.99,273200,True
+VEH-0213,BharatBenz Heavy Duty Truck 2025,Heavy Duty Truck,Diesel,Kolkata Hub,37.3,1.33,1.95,239446,True
+VEH-0214,Force Refrigerated Van 2020,Refrigerated Van,Diesel,Pune Hub,5.3,1.48,2.56,300828,True
+VEH-0215,Volvo Heavy Duty Truck 2023,Heavy Duty Truck,Diesel,Pune Hub,27.5,2.45,4.06,49183,True
+VEH-0216,Volvo Heavy Duty Truck 2019,Heavy Duty Truck,Diesel,Bengaluru Hub,29.8,2.14,3.4,152267,True
+VEH-0217,Euler Electric Delivery Van 2019,Electric Delivery Van,Electric,Hyderabad Hub,1.9,0.54,0.85,47960,True
+VEH-0218,Volvo Heavy Duty Truck 2019,Heavy Duty Truck,Diesel,Bengaluru Hub,21.3,2.23,3.19,67669,False
+VEH-0219,Tata Electric Delivery Van 2024,Electric Delivery Van,Electric,Kolkata Hub,2.4,0.5,0.79,315288,True
+VEH-0220,Isuzu Box Truck 2022,Box Truck,Diesel,Pune Hub,15.4,1.42,1.97,302190,True
+VEH-0221,Isuzu Box Truck 2022,Box Truck,Diesel,Bengaluru Hub,8.8,1.37,1.94,203610,True
+VEH-0222,Mahindra Cargo Van 2021,Cargo Van,CNG/Diesel,Delhi NCR Hub,4.8,0.89,1.54,201385,True
+VEH-0223,Tata Cargo Van 2019,Cargo Van,CNG/Diesel,Bengaluru Hub,4.8,0.8,1.28,10478,True
+VEH-0224,Isuzu Refrigerated Van 2022,Refrigerated Van,Diesel,Ahmedabad Hub,4.0,1.56,2.7,272986,True
+VEH-0225,Ford Cargo Van 2019,Cargo Van,CNG/Diesel,Delhi NCR Hub,3.8,0.82,1.33,99089,True
+VEH-0226,Mahindra Refrigerated Van 2022,Refrigerated Van,Diesel,Bengaluru Hub,7.1,1.57,2.17,311513,False
+VEH-0227,Ashok Leyland Box Truck 2025,Box Truck,Diesel,Chennai Hub,12.5,1.31,2.16,225720,True
+VEH-0228,Switch Electric Delivery Van 2025,Electric Delivery Van,Electric,Pune Hub,2.6,0.31,0.52,312694,True
+VEH-0229,Isuzu Box Truck 2024,Box Truck,Diesel,Chennai Hub,16.8,0.93,1.37,205363,True
+VEH-0230,Force Cargo Van 2024,Cargo Van,CNG/Diesel,Ahmedabad Hub,1.7,0.74,1.14,48322,True
+VEH-0231,Isuzu Refrigerated Van 2023,Refrigerated Van,Diesel,Chennai Hub,5.0,1.22,1.75,25588,True
+VEH-0232,Tata Refrigerated Van 2022,Refrigerated Van,Diesel,Chennai Hub,10.6,1.15,1.82,222544,False
+VEH-0233,BharatBenz Heavy Duty Truck 2024,Heavy Duty Truck,Diesel,Bengaluru Hub,34.7,1.59,2.68,33644,True
+VEH-0234,Mercedes-Benz Cargo Van 2021,Cargo Van,CNG/Diesel,Pune Hub,4.6,0.75,1.2,77217,True
+VEH-0235,Ashok Leyland Box Truck 2021,Box Truck,Diesel,Bengaluru Hub,8.1,1.46,2.06,166905,True
+VEH-0236,Force Cargo Van 2023,Cargo Van,CNG/Diesel,Delhi NCR Hub,3.1,0.95,1.43,174342,True
+VEH-0237,Tata Electric Delivery Van 2020,Electric Delivery Van,Electric,Mumbai Hub,1.3,0.53,0.85,239882,True
+VEH-0238,Mercedes-Benz Cargo Van 2019,Cargo Van,CNG/Diesel,Ahmedabad Hub,3.4,0.93,1.43,269138,True
+VEH-0239,Tata Electric Delivery Van 2020,Electric Delivery Van,Electric,Hyderabad Hub,3.2,0.4,0.7,242553,True
+VEH-0240,Isuzu Refrigerated Van 2019,Refrigerated Van,Diesel,Mumbai Hub,10.4,1.09,1.83,15649,True
+VEH-0241,Mercedes-Benz Cargo Van 2025,Cargo Van,CNG/Diesel,Ahmedabad Hub,1.8,0.94,1.43,285508,True
+VEH-0242,Switch Electric Delivery Van 2020,Electric Delivery Van,Electric,Pune Hub,2.2,0.52,0.74,266541,True
+VEH-0243,Tata Electric Delivery Van 2021,Electric Delivery Van,Electric,Hyderabad Hub,2.1,0.36,0.51,300376,True
+VEH-0244,Tata Refrigerated Van 2020,Refrigerated Van,Diesel,Mumbai Hub,4.3,1.48,2.05,112426,True
+VEH-0245,Isuzu Refrigerated Van 2019,Refrigerated Van,Diesel,Pune Hub,10.1,1.53,2.09,219910,True
+VEH-0246,Mahindra Refrigerated Van 2019,Refrigerated Van,Diesel,Chennai Hub,12.0,1.19,2.07,126490,True
+VEH-0247,Force Cargo Van 2019,Cargo Van,CNG/Diesel,Kolkata Hub,3.8,0.6,0.96,6048,True
+VEH-0248,Tata Heavy Duty Truck 2022,Heavy Duty Truck,Diesel,Kolkata Hub,31.1,2.15,3.23,177507,True
+VEH-0249,Ashok Leyland Box Truck 2020,Box Truck,Diesel,Bengaluru Hub,8.3,1.14,1.85,62762,True
+VEH-0250,Force Refrigerated Van 2021,Refrigerated Van,Diesel,Ahmedabad Hub,7.8,0.86,1.44,164062,True

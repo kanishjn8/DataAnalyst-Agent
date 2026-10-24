@@ -4,6 +4,8 @@ Upload CSV files, connect related tables, and ask questions about your data in p
 
 [Open the live app](https://data-analyst-agent-livid.vercel.app)
 
+[Sample Datasets](datasets)
+
 ## How to use it
 
 1. Create an account or sign in, then create an analysis.

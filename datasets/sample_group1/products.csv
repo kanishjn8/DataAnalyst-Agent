@@ -1,0 +1,201 @@
+product_id,product_name,category,brand,unit_cost,unit_price,stock_quantity,is_active
+PROD-0001,Zenith Wireless Earbuds Lite,Electronics,Zenith,141.68,206.02,116,True
+PROD-0002,NovaTech Robot Vacuum Plus,Home & Kitchen,NovaTech,122.94,218.97,224,True
+PROD-0003,AeroLine Adjustable Dumbbells V2,Fitness & Outdoors,AeroLine,131.27,218.68,161,True
+PROD-0004,NovaTech Wireless Earbuds Lite,Electronics,NovaTech,35.62,56.5,423,True
+PROD-0005,AeroLine Humidifier Pro,Home & Kitchen,AeroLine,41.69,84.08,469,True
+PROD-0006,Strive Foam Roller V2,Fitness & Outdoors,Strive,8.04,17.64,484,True
+PROD-0007,AeroLine Smart Thermostat Max,Home & Kitchen,AeroLine,36.79,70.33,473,True
+PROD-0008,EchoCraft Gaming Mouse Max,Electronics,EchoCraft,43.88,72.58,373,True
+PROD-0009,Vanguard Merino Wool Sweater Series X,Apparel,Vanguard,58.45,126.62,316,True
+PROD-0010,NovaTech Denim Jacket V2,Apparel,NovaTech,45.82,101.08,98,False
+PROD-0011,Lumina Smartwatch Edition,Electronics,Lumina,215.69,409.94,62,True
+PROD-0012,PrimeCore Running Shoes Edition,Apparel,PrimeCore,39.34,63.37,437,True
+PROD-0013,NovaTech Bluetooth Speaker Edition,Electronics,NovaTech,31.26,46.15,429,True
+PROD-0014,Lumina Polarized Sunglasses Edition,Apparel,Lumina,86.76,155.96,63,True
+PROD-0015,ApexGear Air Fryer Plus,Home & Kitchen,ApexGear,58.9,85.07,227,True
+PROD-0016,NovaTech Cast Iron Skillet Series X,Home & Kitchen,NovaTech,104.57,153.41,360,False
+PROD-0017,EchoCraft Air Fryer Max,Home & Kitchen,EchoCraft,26.82,53.75,199,True
+PROD-0018,UrbanPulse History of Computing Max,Books & Media,UrbanPulse,22.86,44.14,62,True
+PROD-0019,Zenith Athletic Shorts Plus,Apparel,Zenith,116.58,193.74,50,True
+PROD-0020,UrbanPulse External SSD Edition,Electronics,UrbanPulse,48.87,107.67,18,True
+PROD-0021,PrimeCore Robot Vacuum V2,Home & Kitchen,PrimeCore,40.43,89.57,148,True
+PROD-0022,Vanguard Thermal Base Layer Plus,Apparel,Vanguard,95.86,148.03,388,True
+PROD-0023,Vanguard Running Shoes Series X,Apparel,Vanguard,40.48,84.51,144,True
+PROD-0024,EchoCraft Smartwatch Max,Electronics,EchoCraft,114.31,241.23,416,True
+PROD-0025,AeroLine USB-C Hub Plus,Electronics,AeroLine,205.04,342.97,223,True
+PROD-0026,PrimeCore Athletic Shorts V2,Apparel,PrimeCore,50.38,104.99,471,True
+PROD-0027,Zenith Sci-Fi Anthology Lite,Books & Media,Zenith,35.18,69.12,407,True
+PROD-0028,Strive Humidifier Max,Home & Kitchen,Strive,108.53,194.88,51,True
+PROD-0029,AeroLine Trekking Poles V2,Fitness & Outdoors,AeroLine,42.59,63.19,250,True
+PROD-0030,UrbanPulse Athletic Shorts Edition,Apparel,UrbanPulse,75.49,111.53,416,True
+PROD-0031,ApexGear Algorithms Handbook Series X,Books & Media,ApexGear,27.78,55.48,22,True
+PROD-0032,UrbanPulse Gaming Mouse Series X,Electronics,UrbanPulse,81.47,166.17,75,True
+PROD-0033,NovaTech Art & Architecture Book V2,Books & Media,NovaTech,17.7,37.16,293,True
+PROD-0034,PrimeCore Art & Architecture Book Edition,Books & Media,PrimeCore,19.51,28.98,340,True
+PROD-0035,ApexGear Thermal Base Layer Plus,Apparel,ApexGear,22.62,41.97,199,True
+PROD-0036,Zenith Power Bank Series X,Electronics,Zenith,76.35,137.12,125,True
+PROD-0037,Zenith Denim Jacket V2,Apparel,Zenith,36.76,74.85,420,True
+PROD-0038,ApexGear Smart Thermostat Plus,Home & Kitchen,ApexGear,46.64,97.18,181,True
+PROD-0039,UrbanPulse Thermal Base Layer Edition,Apparel,UrbanPulse,25.38,50.28,481,True
+PROD-0040,Strive Portable Monitor Edition,Electronics,Strive,139.21,200.9,61,True
+PROD-0041,Lumina Robot Vacuum Series X,Home & Kitchen,Lumina,157.83,251.29,110,True
+PROD-0042,Strive Humidifier Pro,Home & Kitchen,Strive,22.28,36.98,139,True
+PROD-0043,PrimeCore Insulated Water Bottle Pro,Fitness & Outdoors,PrimeCore,12.72,23.72,394,True
+PROD-0044,Zenith Smartwatch Lite,Electronics,Zenith,56.14,98.09,169,True
+PROD-0045,AeroLine USB-C Hub Pro,Electronics,AeroLine,145.09,308.56,193,True
+PROD-0046,NovaTech Webcam 4K Series X,Electronics,NovaTech,201.74,372.25,381,False
+PROD-0047,UrbanPulse Resistance Bands Set Plus,Fitness & Outdoors,UrbanPulse,71.5,109.31,153,True
+PROD-0048,UrbanPulse Biographies Collection Max,Books & Media,UrbanPulse,19.39,39.05,358,True
+PROD-0049,EchoCraft Sleeping Bag Lite,Fitness & Outdoors,EchoCraft,46.6,92.26,355,True
+PROD-0050,Zenith Foam Roller V2,Fitness & Outdoors,Zenith,42.17,68.99,317,False
+PROD-0051,Strive Hiking Boots V2,Apparel,Strive,53.05,91.55,369,True
+PROD-0052,Vanguard USB-C Hub Pro,Electronics,Vanguard,91.03,190.29,160,True
+PROD-0053,AeroLine Running Shoes Edition,Apparel,AeroLine,73.65,145.23,153,True
+PROD-0054,Vanguard Toaster Oven Pro,Home & Kitchen,Vanguard,119.65,205.43,11,False
+PROD-0055,Vanguard Wireless Earbuds Pro,Electronics,Vanguard,285.2,483.74,169,True
+PROD-0056,NovaTech Smartwatch Edition,Electronics,NovaTech,101.73,189.33,313,True
+PROD-0057,PrimeCore Cast Iron Skillet Lite,Home & Kitchen,PrimeCore,167.16,303.3,170,True
+PROD-0058,AeroLine Resistance Bands Set Edition,Fitness & Outdoors,AeroLine,17.5,35.68,431,True
+PROD-0059,PrimeCore Financial Modeling Book Series X,Books & Media,PrimeCore,31.79,58.54,482,True
+PROD-0060,NovaTech Financial Modeling Book Pro,Books & Media,NovaTech,7.53,15.37,347,True
+PROD-0061,EchoCraft History of Computing V2,Books & Media,EchoCraft,33.97,48.62,493,True
+PROD-0062,NovaTech System Design Guide Pro,Books & Media,NovaTech,17.42,32.78,413,True
+PROD-0063,NovaTech History of Computing Lite,Books & Media,NovaTech,44.62,70.8,137,True
+PROD-0064,Strive Chef Knife Set V2,Home & Kitchen,Strive,30.04,55.43,384,True
+PROD-0065,UrbanPulse Blender Pro Max,Home & Kitchen,UrbanPulse,150.55,216.7,60,True
+PROD-0066,NovaTech Financial Modeling Book V2,Books & Media,NovaTech,40.43,62.33,295,True
+PROD-0067,ApexGear Adjustable Dumbbells Plus,Fitness & Outdoors,ApexGear,114.91,172.52,326,True
+PROD-0068,NovaTech Yoga Mat Series X,Fitness & Outdoors,NovaTech,96.22,149.84,26,False
+PROD-0069,EchoCraft Robot Vacuum V2,Home & Kitchen,EchoCraft,92.39,177.72,15,True
+PROD-0070,EchoCraft Financial Modeling Book Pro,Books & Media,EchoCraft,11.02,16.15,311,False
+PROD-0071,ApexGear Blender Pro V2,Home & Kitchen,ApexGear,224.29,338.17,200,True
+PROD-0072,Zenith Hiking Boots V2,Apparel,Zenith,28.11,54.35,332,True
+PROD-0073,UrbanPulse Kettlebell 16kg Lite,Fitness & Outdoors,UrbanPulse,100.06,146.28,67,False
+PROD-0074,ApexGear Athletic Shorts Edition,Apparel,ApexGear,16.4,32.66,440,False
+PROD-0075,Lumina Yoga Mat Pro,Fitness & Outdoors,Lumina,28.27,48.77,395,True
+PROD-0076,PrimeCore External SSD Edition,Electronics,PrimeCore,207.63,428.86,255,True
+PROD-0077,ApexGear Resistance Bands Set Edition,Fitness & Outdoors,ApexGear,55.25,84.69,364,True
+PROD-0078,NovaTech Gaming Mouse Edition,Electronics,NovaTech,149.3,317.4,400,True
+PROD-0079,EchoCraft USB-C Hub Pro,Electronics,EchoCraft,248.18,405.19,409,True
+PROD-0080,AeroLine Foam Roller Edition,Fitness & Outdoors,AeroLine,102.1,223.46,363,True
+PROD-0081,NovaTech External SSD V2,Electronics,NovaTech,138.51,301.78,162,True
+PROD-0082,Strive Sleeping Bag Max,Fitness & Outdoors,Strive,162.12,245.74,67,True
+PROD-0083,Lumina Athletic Shorts Lite,Apparel,Lumina,17.51,26.71,63,True
+PROD-0084,UrbanPulse Chino Pants Plus,Apparel,UrbanPulse,51.76,78.79,69,True
+PROD-0085,Lumina Hiking Boots Series X,Apparel,Lumina,62.27,132.11,374,True
+PROD-0086,PrimeCore Wireless Earbuds Edition,Electronics,PrimeCore,139.55,223.33,433,True
+PROD-0087,NovaTech Adjustable Dumbbells Edition,Fitness & Outdoors,NovaTech,141.49,244.34,167,True
+PROD-0088,Zenith Humidifier Lite,Home & Kitchen,Zenith,86.33,154.61,67,True
+PROD-0089,Vanguard Denim Jacket Max,Apparel,Vanguard,16.96,24.55,288,True
+PROD-0090,PrimeCore Merino Wool Sweater Series X,Apparel,PrimeCore,66.86,143.92,131,True
+PROD-0091,AeroLine Camping Tent Series X,Fitness & Outdoors,AeroLine,43.78,74.55,57,True
+PROD-0092,Strive Yoga Mat Max,Fitness & Outdoors,Strive,143.06,234.69,198,True
+PROD-0093,Zenith Gaming Mouse Pro,Electronics,Zenith,175.18,290.54,256,True
+PROD-0094,UrbanPulse Power Bank Max,Electronics,UrbanPulse,144.95,296.03,95,True
+PROD-0095,Vanguard Polarized Sunglasses Plus,Apparel,Vanguard,18.87,40.88,103,True
+PROD-0096,Zenith Athletic Shorts Edition,Apparel,Zenith,83.38,146.65,227,True
+PROD-0097,ApexGear Productivity Planner Pro,Books & Media,ApexGear,40.52,75.51,263,True
+PROD-0098,ApexGear Productivity Planner Pro,Books & Media,ApexGear,27.11,44.88,334,True
+PROD-0099,Zenith Merino Wool Sweater Lite,Apparel,Zenith,30.38,66.95,156,True
+PROD-0100,EchoCraft Biographies Collection Edition,Books & Media,EchoCraft,48.7,79.23,13,True
+PROD-0101,NovaTech Mechanical Keyboard Plus,Electronics,NovaTech,324.93,473.62,485,True
+PROD-0102,ApexGear Humidifier Series X,Home & Kitchen,ApexGear,196.31,330.56,187,True
+PROD-0103,Strive Polarized Sunglasses Lite,Apparel,Strive,28.15,43.12,436,False
+PROD-0104,ApexGear Sci-Fi Anthology Max,Books & Media,ApexGear,30.34,43.95,339,True
+PROD-0105,Lumina Running Shoes Lite,Apparel,Lumina,34.9,69.3,311,True
+PROD-0106,Lumina Air Fryer Series X,Home & Kitchen,Lumina,34.56,55.68,346,True
+PROD-0107,AeroLine Trekking Poles Plus,Fitness & Outdoors,AeroLine,65.87,106.17,427,True
+PROD-0108,UrbanPulse Chef Knife Set Series X,Home & Kitchen,UrbanPulse,116.04,186.2,123,True
+PROD-0109,ApexGear Blender Pro Lite,Home & Kitchen,ApexGear,196.58,310.17,286,False
+PROD-0110,Vanguard Chino Pants Max,Apparel,Vanguard,65.94,118.62,417,True
+PROD-0111,EchoCraft Air Fryer Series X,Home & Kitchen,EchoCraft,191.89,346.9,475,True
+PROD-0112,Vanguard Webcam 4K Lite,Electronics,Vanguard,201.93,302.85,233,True
+PROD-0113,Zenith History of Computing Series X,Books & Media,Zenith,30.07,47.16,226,True
+PROD-0114,ApexGear Chef Knife Set Plus,Home & Kitchen,ApexGear,86.22,147.75,93,True
+PROD-0115,Lumina Blender Pro Max,Home & Kitchen,Lumina,86.94,129.01,186,True
+PROD-0116,Lumina Portable Monitor Plus,Electronics,Lumina,317.99,480.5,274,True
+PROD-0117,Strive Trekking Poles Max,Fitness & Outdoors,Strive,163.87,238.3,348,True
+PROD-0118,Zenith Mechanical Keyboard Lite,Electronics,Zenith,32.69,69.13,405,True
+PROD-0119,ApexGear Camping Tent Pro,Fitness & Outdoors,ApexGear,110.62,173.36,160,True
+PROD-0120,Lumina Trekking Poles Plus,Fitness & Outdoors,Lumina,29.04,42.54,195,True
+PROD-0121,AeroLine Chino Pants Edition,Apparel,AeroLine,66.64,118.91,224,True
+PROD-0122,AeroLine Bluetooth Speaker Lite,Electronics,AeroLine,250.38,361.73,18,True
+PROD-0123,EchoCraft Running Shoes Pro,Apparel,EchoCraft,62.39,131.27,16,True
+PROD-0124,Vanguard Jump Rope Pro Max,Fitness & Outdoors,Vanguard,37.38,68.07,292,True
+PROD-0125,Lumina Algorithms Handbook Edition,Books & Media,Lumina,9.94,21.09,348,True
+PROD-0126,Zenith Denim Jacket Edition,Apparel,Zenith,117.5,175.35,154,False
+PROD-0127,Lumina Chino Pants V2,Apparel,Lumina,126.05,197.47,79,True
+PROD-0128,UrbanPulse Thermal Base Layer Lite,Apparel,UrbanPulse,58.09,106.69,176,True
+PROD-0129,UrbanPulse Deep Learning Foundations Edition,Books & Media,UrbanPulse,39.64,82.97,460,True
+PROD-0130,EchoCraft Camping Tent Edition,Fitness & Outdoors,EchoCraft,65.7,110.81,157,True
+PROD-0131,Zenith Portable Monitor Lite,Electronics,Zenith,52.19,85.23,10,True
+PROD-0132,AeroLine Art & Architecture Book Plus,Books & Media,AeroLine,18.04,32.8,378,True
+PROD-0133,PrimeCore Hiking Boots V2,Apparel,PrimeCore,64.35,115.1,67,True
+PROD-0134,PrimeCore Humidifier Series X,Home & Kitchen,PrimeCore,156.76,340.2,158,True
+PROD-0135,Zenith Air Fryer Edition,Home & Kitchen,Zenith,221.27,325.5,173,True
+PROD-0136,NovaTech Insulated Water Bottle Series X,Fitness & Outdoors,NovaTech,141.02,242.81,242,True
+PROD-0137,Vanguard Cast Iron Skillet Series X,Home & Kitchen,Vanguard,84.36,120.7,63,True
+PROD-0138,ApexGear Robot Vacuum Pro,Home & Kitchen,ApexGear,146.65,317.87,21,False
+PROD-0139,AeroLine Smart Thermostat Series X,Home & Kitchen,AeroLine,24.03,43.8,417,True
+PROD-0140,EchoCraft Webcam 4K Plus,Electronics,EchoCraft,79.7,160.36,99,True
+PROD-0141,EchoCraft Foam Roller V2,Fitness & Outdoors,EchoCraft,35.98,69.67,366,False
+PROD-0142,UrbanPulse Financial Modeling Book Plus,Books & Media,UrbanPulse,55.56,88.96,154,True
+PROD-0143,EchoCraft Mechanical Keyboard Lite,Electronics,EchoCraft,134.11,223.26,249,True
+PROD-0144,PrimeCore Humidifier Pro,Home & Kitchen,PrimeCore,210.48,321.04,91,True
+PROD-0145,NovaTech Foam Roller V2,Fitness & Outdoors,NovaTech,103.32,151.98,19,False
+PROD-0146,Strive Smart Thermostat Edition,Home & Kitchen,Strive,141.37,306.46,128,True
+PROD-0147,PrimeCore Insulated Water Bottle Edition,Fitness & Outdoors,PrimeCore,112.85,197.95,248,True
+PROD-0148,Strive Trekking Poles V2,Fitness & Outdoors,Strive,84.52,155.02,351,True
+PROD-0149,PrimeCore Smart Thermostat Max,Home & Kitchen,PrimeCore,97.81,209.94,114,True
+PROD-0150,Strive Cast Iron Skillet V2,Home & Kitchen,Strive,52.84,113.85,15,True
+PROD-0151,PrimeCore Cast Iron Skillet Pro,Home & Kitchen,PrimeCore,126.63,198.65,268,True
+PROD-0152,Zenith Athletic Shorts Max,Apparel,Zenith,108.7,158.41,467,True
+PROD-0153,NovaTech Thermal Base Layer Lite,Apparel,NovaTech,31.77,63.39,10,False
+PROD-0154,EchoCraft Chef Knife Set Plus,Home & Kitchen,EchoCraft,112.59,222.0,378,True
+PROD-0155,NovaTech Chef Knife Set V2,Home & Kitchen,NovaTech,20.81,40.23,48,True
+PROD-0156,Strive History of Computing V2,Books & Media,Strive,34.73,54.01,388,True
+PROD-0157,Vanguard System Design Guide Series X,Books & Media,Vanguard,52.74,76.22,487,True
+PROD-0158,AeroLine Deep Learning Foundations Plus,Books & Media,AeroLine,21.88,45.25,312,True
+PROD-0159,EchoCraft External SSD V2,Electronics,EchoCraft,243.19,398.78,84,True
+PROD-0160,Zenith Smartwatch Series X,Electronics,Zenith,42.68,94.08,303,True
+PROD-0161,Strive Deep Learning Foundations Plus,Books & Media,Strive,36.94,62.74,444,True
+PROD-0162,Vanguard Sleeping Bag V2,Fitness & Outdoors,Vanguard,56.39,97.48,481,True
+PROD-0163,EchoCraft Cast Iron Skillet V2,Home & Kitchen,EchoCraft,70.77,121.83,90,False
+PROD-0164,Lumina Bluetooth Speaker Plus,Electronics,Lumina,67.56,99.11,339,True
+PROD-0165,PrimeCore Sci-Fi Anthology Lite,Books & Media,PrimeCore,9.21,19.96,271,True
+PROD-0166,ApexGear Jump Rope Pro V2,Fitness & Outdoors,ApexGear,56.53,92.92,249,True
+PROD-0167,ApexGear Sleeping Bag Pro,Fitness & Outdoors,ApexGear,80.07,141.71,345,True
+PROD-0168,PrimeCore Sci-Fi Anthology Lite,Books & Media,PrimeCore,15.5,25.4,369,True
+PROD-0169,EchoCraft Portable Monitor Max,Electronics,EchoCraft,149.41,223.47,164,True
+PROD-0170,Lumina Smart Thermostat Max,Home & Kitchen,Lumina,40.34,80.99,412,True
+PROD-0171,EchoCraft Productivity Planner Max,Books & Media,EchoCraft,21.94,40.87,31,True
+PROD-0172,ApexGear Webcam 4K Plus,Electronics,ApexGear,49.0,86.69,355,True
+PROD-0173,Lumina Yoga Mat Lite,Fitness & Outdoors,Lumina,24.56,46.12,420,True
+PROD-0174,ApexGear Wireless Earbuds Lite,Electronics,ApexGear,246.26,405.71,248,True
+PROD-0175,AeroLine Espresso Machine Lite,Home & Kitchen,AeroLine,41.37,76.01,346,True
+PROD-0176,PrimeCore Robot Vacuum Plus,Home & Kitchen,PrimeCore,182.84,287.01,262,False
+PROD-0177,Vanguard External SSD V2,Electronics,Vanguard,192.17,282.19,23,True
+PROD-0178,UrbanPulse Linen Shirt Edition,Apparel,UrbanPulse,48.87,86.39,374,True
+PROD-0179,UrbanPulse Adjustable Dumbbells Max,Fitness & Outdoors,UrbanPulse,24.43,50.56,12,True
+PROD-0180,ApexGear External SSD Max,Electronics,ApexGear,157.7,270.48,283,True
+PROD-0181,EchoCraft Trekking Poles Plus,Fitness & Outdoors,EchoCraft,71.8,140.62,482,True
+PROD-0182,AeroLine Air Fryer Plus,Home & Kitchen,AeroLine,49.78,84.23,282,True
+PROD-0183,Zenith Air Fryer Series X,Home & Kitchen,Zenith,63.08,131.43,154,True
+PROD-0184,AeroLine Adjustable Dumbbells Series X,Fitness & Outdoors,AeroLine,68.37,126.9,242,True
+PROD-0185,Strive Smartwatch V2,Electronics,Strive,41.39,70.84,43,True
+PROD-0186,Strive Denim Jacket Plus,Apparel,Strive,74.23,125.57,51,True
+PROD-0187,EchoCraft Running Shoes Series X,Apparel,EchoCraft,52.18,85.34,235,True
+PROD-0188,EchoCraft Algorithms Handbook Max,Books & Media,EchoCraft,27.89,52.36,386,True
+PROD-0189,EchoCraft Sci-Fi Anthology Lite,Books & Media,EchoCraft,11.04,22.62,121,True
+PROD-0190,AeroLine Camping Tent Series X,Fitness & Outdoors,AeroLine,31.09,59.65,104,True
+PROD-0191,PrimeCore Kettlebell 16kg V2,Fitness & Outdoors,PrimeCore,98.64,213.09,40,True
+PROD-0192,Lumina Camping Tent Series X,Fitness & Outdoors,Lumina,117.53,245.87,331,True
+PROD-0193,Zenith Air Fryer V2,Home & Kitchen,Zenith,145.84,323.14,127,True
+PROD-0194,AeroLine Smart Thermostat Edition,Home & Kitchen,AeroLine,49.7,80.53,450,True
+PROD-0195,ApexGear History of Computing V2,Books & Media,ApexGear,31.37,55.12,182,True
+PROD-0196,PrimeCore Merino Wool Sweater Lite,Apparel,PrimeCore,28.49,53.66,284,True
+PROD-0197,Lumina Waterproof Parka Max,Apparel,Lumina,88.83,152.51,10,True
+PROD-0198,Strive Camping Tent Pro,Fitness & Outdoors,Strive,49.73,83.53,148,False
+PROD-0199,NovaTech Foam Roller Lite,Fitness & Outdoors,NovaTech,54.47,91.02,399,True
+PROD-0200,Strive Design Patterns Manual Series X,Books & Media,Strive,11.68,25.07,181,True
