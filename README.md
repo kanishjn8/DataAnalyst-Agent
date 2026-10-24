@@ -1,4 +1,4 @@
-<img width="1464" height="801" alt="image" src="https://github.com/user-attachments/assets/4399cf9e-3cc1-4f30-8fac-42eb4f0b96a2" /># Data analysis workspace
+# Data analysis workspace
 
 Upload CSV files, connect related tables, and ask questions about your data in plain language. The app can summarize results, create charts, flag statistical anomalies, and show the SQL and calculation method behind an answer.
 
