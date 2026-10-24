@@ -61,6 +61,8 @@ All infrastructure runs locally. Gemini is the only external service, and questi
 
 Docker checks service readiness every 30 seconds after startup. `/health` is a cheap liveness response; `/ready` checks the database. Neither endpoint calls Gemini or consumes question quota. Ordinary workspace reads and saves do not compete with the model-request concurrency limit.
 
+For external uptime monitoring, use `/health`. It supports both `GET` and `HEAD`, including monitors that only offer `HEAD`. A five-minute interval is enough; no separate cron job is needed. Keep the platform's readiness check on `/ready`.
+
 ### After changing the API key
 
 Compose reads `.env` when it creates a container. A plain restart does not load changed values. Run:

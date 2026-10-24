@@ -79,7 +79,7 @@ def create_app(settings=None, repository=None, provider=None, authenticate=None)
             headers.update(
                 {
                     "Access-Control-Allow-Origin": origin,
-                    "Access-Control-Allow-Methods": "POST,GET,OPTIONS",
+                    "Access-Control-Allow-Methods": "POST,GET,HEAD,OPTIONS",
                     "Access-Control-Allow-Headers": "content-type,authorization",
                     "Access-Control-Expose-Headers": "X-Request-Id,X-Cache",
                 }
@@ -143,6 +143,11 @@ def create_app(settings=None, repository=None, provider=None, authenticate=None)
     async def health():
         # Liveness must not use analytical capacity, model quota or database connections.
         return dict(status="ok", capabilities={"analysis": provider.ready})
+
+    @app.head("/health", include_in_schema=False)
+    async def health_head():
+        # Uptime monitors can check liveness without fetching a response body.
+        return Response(status_code=200)
 
     @app.get("/ready")
     async def ready():

@@ -46,6 +46,10 @@ async def test_browser_origin_and_preflight_allow_only_configured_domains(monkey
             response = await client.get("/health", headers={"Origin": "https://frontend.example"})
             assert response.status_code == 200
             assert response.headers["access-control-allow-origin"] == "https://frontend.example"
+            head = await client.head("/health")
+            assert head.status_code == 200
+            assert head.content == b""
+            assert head.headers["cache-control"] == "no-store"
             preflight = await client.options("/workspace", headers={
                 "Origin": "https://frontend.example",
                 "Access-Control-Request-Method": "POST",
@@ -56,7 +60,7 @@ async def test_browser_origin_and_preflight_allow_only_configured_domains(monkey
             assert "authorization" in preflight.headers["access-control-allow-headers"]
             for origin in ("https://evil.example", "https://frontend.example.evil.example",
                            "https://preview.vercel.app", "null"):
-                for method in ("GET", "OPTIONS"):
+                for method in ("GET", "HEAD", "OPTIONS"):
                     denied = await client.request(method, "/health", headers={"Origin": origin})
                     assert denied.status_code == 403
                     assert "access-control-allow-origin" not in denied.headers
