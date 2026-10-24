@@ -33,3 +33,65 @@ select:not([multiple]):not([size]){appearance:none;-webkit-appearance:none;paddi
 
 .sidebar-account{margin-top:auto;padding:18px 8px 0;display:flex;flex-direction:column;gap:12px;flex-shrink:0}.sidebar-account .save-state{color:#aeb9ce}.sidebar-account .secondary{background:transparent;border-color:#46526b;color:#c5cee0;justify-content:flex-start;padding:9px 12px;font-size:12px}.sidebar-account .secondary:hover{background:#243049;border-color:#63718b}.sidebar-table-list{min-height:0;overflow-y:auto;flex:0 1 auto}
 @media(max-width:600px){.sidebar{flex-direction:column;align-items:stretch;gap:12px}.sidebar .side-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.sidebar .side-nav button{padding:9px 10px;font-size:12px;gap:8px}.sidebar .back-to-analyses{margin:0}.sidebar-account{margin:0;padding:8px 0 0;flex-direction:row;justify-content:space-between;align-items:center}.sidebar-account .secondary{margin-left:auto;padding:7px 12px}.sidebar-brand{align-self:flex-start}}
+
+.account-identity{display:flex;align-items:center;gap:10px;min-width:0;padding-top:14px;border-top:1px solid #354158}
+.account-avatar{display:grid;place-items:center;width:34px;height:34px;flex-shrink:0;border-radius:50%;background:#3c3c60;color:#e4ddff;font-size:14px;font-weight:600}
+.account-details{min-width:0;flex:1}
+.account-details>span{display:block;color:#aeb9ce;font-size:10px;margin-bottom:4px}
+.account-details>strong{display:block;color:#eef0fa;font-size:12px;font-weight:500;overflow-wrap:anywhere;line-height:1.5}
+@media(max-width:600px){.sidebar-account{flex-wrap:wrap;border-top:1px solid #354158;padding-top:12px}.sidebar-account .save-state{flex-basis:100%}.account-identity{border:0;padding:0;flex:1}.sidebar-account .secondary{flex-shrink:0}}
+
+/* Dashboard controls and results are separate surfaces. */
+.workspace-panel.dashboard-workspace{background:transparent;border:0;box-shadow:none;overflow:visible}
+.dashboard-workspace .dashboard-view{padding:0}
+.dashboard-layout{display:flex;flex-direction:column;gap:28px}
+.dashboard-selection{padding:24px}
+.dashboard-selection .section-heading{align-items:flex-start}
+.dashboard-selection .secondary{flex-shrink:0}
+.dashboard-table-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.dashboard-table-options label{display:flex;align-items:center;gap:11px;min-width:0;padding:13px 14px;border:1px solid #e2deec;border-radius:8px;background:#fff;cursor:pointer}
+.dashboard-table-options label.selected{background:#f7f4fd;border-color:#b8a9dc}
+.dashboard-table-options label:focus-within{outline:2px solid #9874c3;outline-offset:2px}
+.dashboard-table-options input{accent-color:#8070bd;width:15px;height:15px;flex-shrink:0}
+.dashboard-table-options label>span{min-width:0}
+.dashboard-table-options strong{display:block;font-size:12px;font-weight:600;color:#59647d;overflow-wrap:anywhere}
+.dashboard-table-options small{display:block;font-size:10px;color:#8992a5;margin-top:5px}
+.dashboard-selection>.caption{margin-top:12px}
+.dashboard-results{min-width:0}
+.dashboard-results>.section-heading p{line-height:1.7;overflow-wrap:anywhere}
+.dashboard-summary{padding:22px 24px;margin-bottom:18px}
+.dashboard-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.dashboard-cards>.result{margin-bottom:0}
+.dashboard-empty{display:flex;align-items:center;flex-direction:column;text-align:center;padding:38px 24px;gap:12px}
+.dashboard-empty h3{font-size:15px;color:#59647d}
+.dashboard-empty p{max-width:370px;font-size:12px;color:#8992a5;line-height:1.8}
+.generation-progress{padding:20px 22px;margin-bottom:18px;background:#faf8fd;border:1px solid #e3dcee;border-radius:10px;color:#6b617c}
+.generation-progress h3{font-size:12px;font-weight:600;margin-bottom:13px}
+.generation-progress ol{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.generation-progress li{display:flex;gap:9px;align-items:flex-start;font-size:11px;line-height:1.6;color:#8b8298}
+.generation-progress li>svg{flex-shrink:0;color:#6c9c87;margin-top:2px}
+.generation-progress li.active{color:#6b5395}
+.progress-dot{width:7px;height:7px;flex-shrink:0;border-radius:50%;background:#8c75bf;margin:5px 3px 0 4px;animation:progress-pulse 1.5s ease-in-out infinite}
+.progress-answer{border-top:1px solid #e8e1f0;margin-top:17px;padding-top:15px}
+@keyframes progress-pulse{50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.progress-dot{animation:none}}
+.markdown{font-size:13px;line-height:1.85;color:#69758c;overflow-wrap:anywhere;white-space:normal}
+.markdown>:first-child{margin-top:0}.markdown>:last-child{margin-bottom:0}
+.markdown p{margin:10px 0}
+.markdown strong{font-weight:650;color:#515d76}
+.markdown h1,.markdown h2,.markdown h3,.markdown h4,.markdown h5,.markdown h6{font-size:14px;letter-spacing:0;line-height:1.6;color:#515d76;margin:17px 0 8px;font-weight:650}
+.markdown ul,.markdown ol{padding-left:21px;margin:9px 0}
+.markdown li{margin:4px 0}
+.markdown blockquote{border-left:3px solid #c6b6e2;padding-left:13px;margin:12px 0;color:#827194}
+.markdown a{color:#7560ad;text-decoration:underline;text-underline-offset:3px}
+.markdown code{font-size:.9em;background:#f0edf7;border-radius:4px;padding:2px 5px;color:#75608e}
+.markdown pre{max-width:100%;overflow:auto;background:#f5f3f9;border-radius:7px;padding:14px;white-space:pre-wrap}
+.markdown pre code{background:none;padding:0}
+.markdown table{display:block;max-width:100%;overflow:auto;margin:12px 0;border:1px solid var(--line);border-radius:7px}
+.markdown th,.markdown td{white-space:normal;min-width:90px;max-width:none}
+.markdown hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.result .answer .markdown{white-space:normal}
+.result details .markdown{font-size:11px;color:inherit}
+.result details .markdown p{margin:6px 0}
+@media(max-width:1000px){.dashboard-cards{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.dashboard-selection{padding:20px 17px}.dashboard-selection .section-heading{flex-direction:column;gap:15px}.dashboard-selection .secondary{width:100%}.dashboard-table-options{grid-template-columns:minmax(0,1fr)}.dashboard-summary{padding:18px}.generation-progress{padding:17px}.dashboard-layout{gap:24px}}

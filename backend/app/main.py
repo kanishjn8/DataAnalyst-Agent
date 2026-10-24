@@ -229,6 +229,22 @@ def create_app(settings=None, repository=None, provider=None, authenticate=None)
             await context.__aexit__(None, None, None)
             raise
 
+        return stream_response(events, context, request, question.requestId)
+
+    @app.post("/analyses/{workspace_id}/dashboard/stream")
+    async def dashboard_stream(workspace_id: str, request: Request):
+        owner = await authenticate(request)
+        question = await body(request, DashboardRequest, 8000)
+        context = analytical_request(owner)
+        await context.__aenter__()
+        try:
+            events = await analyst.start_dashboard(owner, workspace_id, question)
+        except BaseException:
+            await context.__aexit__(None, None, None)
+            raise
+        return stream_response(events, context, request, question.requestId)
+
+    def stream_response(events, context, request, request_id):
         async def stream():
             try:
                 async with asyncio.timeout(120):
@@ -245,14 +261,18 @@ def create_app(settings=None, repository=None, provider=None, authenticate=None)
                     else "Could not complete this analysis. Please retry or rephrase the question."
                 )
                 yield (
-                    json.dumps(dict(type="error", message=message, requestId=question.requestId))
+                    json.dumps(dict(type="error", message=message, requestId=request_id))
                     + "\n"
                 )
             finally:
-                await events.aclose()
-                await context.__aexit__(None, None, None)
+                try:
+                    await events.aclose()
+                finally:
+                    await context.__aexit__(None, None, None)
 
-        return StreamingResponse(stream(), media_type="application/x-ndjson")
+        return StreamingResponse(
+            stream(), media_type="application/x-ndjson", headers={"X-Accel-Buffering": "no"}
+        )
 
     return app
 

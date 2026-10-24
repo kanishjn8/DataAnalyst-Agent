@@ -47,14 +47,17 @@ export async function exportFile(workspaceId: string, action: 'exportDataset' | 
 }
 export async function analyze(project: Project, question: string, requestId: string, signal: AbortSignal, receive: (event: StreamEvent) => void, tableId?: string) {
   const response = await post('analyze', { workspaceId: project.id, dataVersion: project.dataVersion, question, requestId, ...(tableId ? { tableId } : {}) }, signal);
+  await readEvents<StreamEvent>(response, signal, receive, event => event.type === 'done' || (!tableId && event.type === 'result'));
+}
+async function readEvents<Event extends { type: string }>(response: Response, signal: AbortSignal, receive: (event: Event) => void, complete: (event: Event) => boolean) {
   const reader = response.body?.getReader();
   if (!reader) throw new Error('Could not read the response. Please try again.');
   const decoder = new TextDecoder(); let buffer = '', finished = false;
   const processLine = (line: string) => {
     if (!line.trim()) return;
-    const event = JSON.parse(line) as StreamEvent;
-    if (event.type === 'error') throw new Error(event.message);
-    if (event.type === 'done' || (!tableId && event.type === 'result')) finished = true;
+    const event = JSON.parse(line) as Event;
+    if (event.type === 'error') throw new Error('message' in event && typeof event.message === 'string' ? event.message : 'Could not complete this request.');
+    if (complete(event)) finished = true;
     receive(event);
   };
   try {
@@ -65,11 +68,19 @@ export async function analyze(project: Project, question: string, requestId: str
 }
 
 export type Dashboard = { id: string; dataVersion: number; tableIds: string[]; cards: import('@/shared/contracts').AnalysisResult[]; summary: string; createdAt: string };
+export type DashboardEvent = Extract<StreamEvent, { type: 'status' | 'text' | 'error' }> | { type: 'card'; index: number; card: Dashboard['cards'][number] } | { type: 'dashboard'; dashboard: Dashboard } | { type: 'done'; requestId: string };
 export async function getDashboard(projectId: string, signal?: AbortSignal): Promise<Dashboard | null> {
   const response = await fetch(`${root}/analyses/${projectId}/dashboard`, { headers: await authHeaders(), signal });
   if (!response.ok) throw new Error('Could not load the dashboard. Please try again.');
   return (await response.json()).dashboard;
 }
-export async function generateDashboard(projectId: string, tableIds: string[]): Promise<Dashboard> {
-  return (await (await post(`analyses/${projectId}/dashboard`, { tableIds, requestId: crypto.randomUUID() })).json()).dashboard;
+export async function generateDashboard(projectId: string, tableIds: string[], signal: AbortSignal, receive: (event: DashboardEvent) => void): Promise<Dashboard> {
+  const response = await post(`analyses/${projectId}/dashboard/stream`, { tableIds, requestId: crypto.randomUUID() }, signal);
+  let dashboard: Dashboard | null = null;
+  await readEvents<DashboardEvent>(response, signal, event => {
+    if (event.type === 'dashboard') dashboard = event.dashboard;
+    receive(event);
+  }, event => event.type === 'dashboard');
+  if (!dashboard) throw new Error('The dashboard was not saved. Please try again.');
+  return dashboard;
 }

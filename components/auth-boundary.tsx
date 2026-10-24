@@ -1,24 +1,28 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
+import type { User } from '@supabase/supabase-js';
 import { getAuth, signUp } from '@/lib/auth';
 import { Icon } from './icons';
 
+const AccountContext = createContext<User | null>(null);
+export function useAccount() { return useContext(AccountContext); }
+
 export function AuthBoundary({ children }: { children: ReactNode }) {
-  const [session, setSession] = useState<string | null>(null), [loading, setLoading] = useState(true), [error, setError] = useState('');
+  const [user, setUser] = useState<User | null>(null), [loading, setLoading] = useState(true), [error, setError] = useState('');
   useEffect(() => {
     let alive = true, unsubscribe = () => {};
     getAuth().then(async client => {
       if (!alive) return;
-      const listener = client.auth.onAuthStateChange((_event, next) => { if (alive) setSession(next?.user.id ?? null); });
+      const listener = client.auth.onAuthStateChange((_event, next) => { if (alive) setUser(next?.user ?? null); });
       unsubscribe = () => listener.data.subscription.unsubscribe();
       const { data, error } = await client.auth.getSession();
       if (error) throw error;
-      if (alive) { setSession(data.session?.user.id ?? null); setLoading(false); }
+      if (alive) { setUser(data.session?.user ?? null); setLoading(false); }
     }).catch(error => { if (alive) { setError(error.message); setLoading(false); } });
     return () => { alive = false; unsubscribe(); };
   }, []);
-  if (session) return <div key={session}>{children}</div>;
+  if (user) return <AccountContext.Provider key={user.id} value={user}>{children}</AccountContext.Provider>;
   return <div className="app-shell overview-shell"><aside className="sidebar"><div className="sidebar-brand"><span className="brand-mark"><Icon name="grid" size={21}/></span><div><strong>Workspace</strong><span>Data analysis</span></div></div></aside><div className="main-shell"><main className="main-content"><div className="page-heading"><div><h1>Data analysis</h1><p className="page-description">Organize your data and explore your analyses.</p></div></div>{loading ? <p role="status">Loading your workspace…</p> : <SignIn initialError={error}/>}</main></div></div>;
 }
 function SignIn({ initialError }: { initialError: string }) {

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { analyze, deleteProject, listProjects, mutateProject, previewTable } from '../lib/api';
+import { analyze, deleteProject, generateDashboard, listProjects, mutateProject, previewTable } from '../lib/api';
 import type { Project } from '../shared/workspace';
 const project = { id: 'server-workspace', revision: 4, dataVersion: 2 } as Project;
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.resetModules(); });
@@ -53,6 +53,34 @@ describe('frontend API boundary', () => {
   it('reports an interrupted stream instead of pretending it completed', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{"type":"status","message":"Working"}\n')));
     await expect(analyze(project, 'Revenue?', 'r', new AbortController().signal, () => {})).rejects.toThrow(/ended early/);
+  });
+  it('streams dashboard cards and text before returning the saved dashboard', async () => {
+    const saved = { id: 'saved-dashboard', dataVersion: 2, tableIds: ['sales'], cards: [], summary: '**Total:** 42', createdAt: '2026-10-24' };
+    const lines = [
+      { type: 'status', message: 'Calculating…' },
+      { type: 'card', index: 0, card: { title: 'Revenue' } },
+      { type: 'text', text: '**Total:** 42' },
+      { type: 'dashboard', dashboard: saved },
+      { type: 'done', requestId: 'r' },
+    ].map(event => JSON.stringify(event)).join('\n');
+    const bytes = new TextEncoder().encode(lines);
+    const fetch = vi.fn().mockResolvedValue(new Response(new ReadableStream({ start(output) {
+      // Split in the middle of a UTF-8 character as well as an NDJSON event.
+      for (let i = 0; i < bytes.length; i += 7) output.enqueue(bytes.slice(i, i + 7));
+      output.close();
+    } })));
+    vi.stubGlobal('fetch', fetch);
+    const events: string[] = [];
+    expect(await generateDashboard(project.id, ['sales'], new AbortController().signal, event => events.push(event.type))).toEqual(saved);
+    expect(fetch.mock.calls[0][0]).toBe('/api/analyses/server-workspace/dashboard/stream');
+    expect(events).toEqual(['status', 'card', 'text', 'dashboard', 'done']);
+  });
+  it.each([
+    ['{"type":"card","index":0,"card":{}}\n', 'ended early'],
+    ['{"type":"error","message":"The dataset changed.","requestId":"r"}\n', 'dataset changed'],
+  ])('does not treat an incomplete dashboard as saved', async (body, message) => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(body)));
+    await expect(generateDashboard(project.id, ['sales'], new AbortController().signal, () => {})).rejects.toThrow(message);
   });
   it('surfaces backend validation failures', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(Response.json({ error: 'Column types do not match.' }, { status: 400 })));

@@ -12,6 +12,8 @@ import { DataTable, ResultCard } from './result-card';
 import { Icon } from './icons';
 import { signOut } from '@/lib/auth';
 import { DashboardPanel } from './dashboard-panel';
+import { useAccount } from './auth-boundary';
+import { GenerationProgress } from './generation-progress';
 
 const views = [
   { id: 'setup', label: 'Data setup', icon: 'database' },
@@ -37,7 +39,7 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
   const allTables = tableId === 'all';
   const resultFilter = allTables || search.get('findings') === 'all' ? '' : tableId;
   const [preview, setPreview] = useState<{ id: string; version: number; data: PreparedView | null; error: string }>({ id: '', version: -1, data: null, error: '' });
-  const [busy, setBusy] = useState(false), [error, setError] = useState(''), [status, setStatus] = useState(''), [streamText, setStreamText] = useState('');
+  const [busy, setBusy] = useState(false), [error, setError] = useState(''), [steps, setSteps] = useState<string[]>([]), [streamText, setStreamText] = useState('');
   const [liveResults, setLiveResults] = useState<{ id: string; result: AnalysisResult }[]>([]);
   const composer = useRef<HTMLTextAreaElement>(null), abort = useRef<AbortController | null>(null);
   const hasTables = project.tables.length > 0;
@@ -65,12 +67,12 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
     if (busy || !capabilities.analysis || (scope !== 'all' && !selectedTable)) return;
     const text = question.trim() || (scope === 'all' ? 'Summarize this table and its data quality.' : '');
     if (!text) return;
-    setBusy(true); setError(''); setStreamText(''); setLiveResults([]); setStatus('Preparing your question…'); setResultFilter(scope === 'all' ? '' : scope);
+    setBusy(true); setError(''); setStreamText(''); setLiveResults([]); setSteps(['Preparing your question…']); setResultFilter(scope === 'all' ? '' : scope);
     const controller = new AbortController(); abort.current = controller;
     try {
       const current = await onAction({ action: 'patch', question: text });
       await analyze(current, text, crypto.randomUUID(), controller.signal, event => {
-        if (event.type === 'status') { setStatus(event.message); setStreamText(''); }
+        if (event.type === 'status') { setSteps(steps => steps.at(-1) === event.message ? steps : [...steps, event.message]); setStreamText(''); }
         if (event.type === 'text') setStreamText(text => text + event.text);
         if (event.type === 'result') { setLiveResults(results => [...results, { id: event.analysisId, result: event.result }]); setStreamText(''); }
       }, scope);
@@ -79,7 +81,7 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
     finally {
       // Reload committed findings after completion or an interrupted request.
       try { await onRefresh(); } catch (error) { setError((error as Error).message); }
-      setBusy(false); setStatus(''); setStreamText(''); setLiveResults([]);
+      setBusy(false); setSteps([]); setStreamText(''); setLiveResults([]);
     }
   }
   async function exportData(action: 'exportDataset' | 'exportResult' | 'exportReport', id?: string) {
@@ -95,7 +97,7 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
     <div className="main-shell">
       <main className="main-content"><div className="page-heading project-heading"><div><label className="sr-only" htmlFor="project-title">Analysis title</label><input id="project-title" className="project-title-input" disabled={busy} value={title} maxLength={80} onChange={event => setTitle(event.target.value)} onBlur={() => { const value = title.trim() || project.title; setTitle(value); if (value !== project.title) void onAction({ action: 'patch', title: value }).catch(() => {}); }} onKeyDown={event => { if (event.key === 'Enter') event.currentTarget.blur(); }}/><p className="page-description">{effectiveView === 'setup' ? 'Arrange your tables and connect related data.' : `${project.tables.length} tables available · select any table to explore it`}</p></div>{effectiveView !== 'setup' && <button className="secondary" disabled={busy} onClick={() => changeView('setup')}><Icon name="database" size={16}/>Open table canvas</button>}</div>
       {error && <div className="alert" role="alert"><Icon name="alert" size={16}/>{error}<button onClick={() => setError('')}>Dismiss</button></div>}
-      <section className="workspace-panel">
+      <section className={`workspace-panel${effectiveView === 'dashboard' ? ' dashboard-workspace' : ''}`}>
       {effectiveView === 'setup' && <div id="view-setup" role="region" aria-label="Data setup"><DataSetup project={project} onAction={onAction} onContinue={() => changeView('data')}/></div>}
       {effectiveView === 'data' && <div id="view-data" role="region" aria-label="Data preview" className="data-view">
         <div className="section-heading"><div><h2>Explore your tables</h2><p>Original and connected tables can each be previewed and analyzed.</p></div><button className="secondary" disabled={!data} onClick={() => void exportData('exportDataset')}><Icon name="download" size={14}/>Export CSV</button></div>
@@ -107,10 +109,10 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
       {effectiveView === 'analysis' && <div id="view-analysis" role="region" aria-label="Analysis">
         <div className="analysis-scope"><label className="table-picker">Ask about<select value={allTables || selectedTable ? tableId : ''} disabled={busy} onChange={event => { changeView('analysis', event.target.value); }}><option value="">Choose a table</option><option value="all">All tables</option>{project.tables.map(table => <option key={table.id} value={table.id}>{table.name}</option>)}</select></label><div><strong>{allTables ? 'Ask across your workspace' : selectedTable ? `${selectedTable.rowCount.toLocaleString()} rows · ${selectedTable.columns.length} columns` : 'Select a table to ask a question'}</strong><p>{allTables ? 'Uses the relevant tables and their connections to answer your question.' : 'Choose All tables to ask across your workspace.'}</p></div></div>
         <div className="questions-section"><div className="section-heading"><div><h2>What would you like to know?</h2><p>Questions use your selection. All tables gives one answer using the relevant data.</p></div></div><div className="suggestion-grid">{questions.map(item => <button key={item.title} className="suggestion" disabled={busy} onClick={() => { setQuestion(item.text); composer.current?.focus(); }}><span className={`suggestion-icon ${item.color}`}><Icon name={item.icon} size={19}/></span><span><strong>{item.title}</strong><small>{item.text}</small></span><Icon name="arrow" size={16}/></button>)}</div></div>
-        <div className="conversation-results">{resultFilter && <div className="findings-filter"><span>Findings for {project.tables.find(table => table.id === resultFilter)?.name}</span><button className="small" onClick={() => setResultFilter('')}>Show all findings</button></div>}{turns.map(turn => <article key={turn.id}><div className="question"><strong>You <span className="finding-table">{turn.result.tableName ?? 'Prepared table'}</span></strong><p>{turn.question}</p></div><ResultCard result={turn.result} onPin={() => void pin(turn.id, !turn.pinned)} onExport={() => void exportData('exportResult', turn.id)}/></article>)}{liveResults.filter(result => !project.analyses.some(turn => turn.id === result.id)).map(result => <ResultCard key={result.id} result={result.result}/>)}{busy && <div className="streaming-result" role="status"><p>{status}</p>{streamText && <p className="answer">{streamText}</p>}</div>}{!!project.analyses.length && <button className="secondary" onClick={() => void exportData('exportReport')}>Export report</button>}</div>
+        <div className="conversation-results">{resultFilter && <div className="findings-filter"><span>Findings for {project.tables.find(table => table.id === resultFilter)?.name}</span><button className="small" onClick={() => setResultFilter('')}>Show all findings</button></div>}{turns.map(turn => <article key={turn.id}><div className="question"><strong>You <span className="finding-table">{turn.result.tableName ?? 'Prepared table'}</span></strong><p>{turn.question}</p></div><ResultCard result={turn.result} onPin={() => void pin(turn.id, !turn.pinned)} onExport={() => void exportData('exportResult', turn.id)}/></article>)}{liveResults.filter(result => !project.analyses.some(turn => turn.id === result.id)).map(result => <ResultCard key={result.id} result={result.result}/>)}{busy && <GenerationProgress steps={steps} text={streamText}/>}{!!project.analyses.length && <button className="secondary" onClick={() => void exportData('exportReport')}>Export report</button>}</div>
         <div className="composer-wrap"><form className="composer" onSubmit={event => { event.preventDefault(); void ask(tableId); }}><div className="composer-input"><Icon name="spark" size={20}/><label htmlFor="question" className="sr-only">Your question</label><textarea ref={composer} id="question" placeholder={allTables ? 'Ask about all tables…' : selectedTable ? `Ask about ${selectedTable.name}…` : 'Choose a table or All tables above…'} value={question} maxLength={1000} rows={2} onChange={event => setQuestion(event.target.value)} disabled={busy} onBlur={() => { if (!busy && question !== project.question) void onAction({ action: 'patch', question }).catch(() => {}); }}/></div><div className="composer-footer"><span>{capabilities.analysis ? allTables ? 'Using workspace context · relevant tables chosen for your question' : selectedTable ? `Using ${selectedTable.name}` : 'Choose a table before sending.' : 'Analysis is currently unavailable.'}</span>{busy ? <button type="button" className="secondary" onClick={() => abort.current?.abort()}>Stop</button> : <button className="send-button" disabled={!capabilities.analysis || !question.trim() || (!selectedTable && !allTables)}>Send<Icon name="arrow" size={17}/></button>}</div></form></div>
       </div>}
-      {effectiveView === 'dashboard' && <div id="view-dashboard" role="region" aria-label="Dashboard" className="dashboard-view"><DashboardPanel project={project} available={capabilities.analysis}/>{project.analyses.some(turn => turn.pinned) ? project.analyses.filter(turn => turn.pinned).map(turn => <div key={turn.id}><button className="small" onClick={() => void pin(turn.id, false)}>Remove from dashboard</button><ResultCard result={turn.result} onExport={() => void exportData('exportResult', turn.id)}/></div>) : null}</div>}
+      {effectiveView === 'dashboard' && <div id="view-dashboard" role="region" aria-label="Dashboard" className="dashboard-view"><DashboardPanel key={`${project.id}:${project.dataVersion}`} project={project} available={capabilities.analysis}/>{project.analyses.some(turn => turn.pinned) ? project.analyses.filter(turn => turn.pinned).map(turn => <div key={turn.id}><button className="small" onClick={() => void pin(turn.id, false)}>Remove from dashboard</button><ResultCard result={turn.result} onExport={() => void exportData('exportResult', turn.id)}/></div>) : null}</div>}
       </section></main><Footer/>
     </div>
   </div>;
@@ -118,5 +120,15 @@ export function AnalysisWorkspace({ project, view, onAction, onRefresh, onBack, 
 export function Footer() { return <footer><span>Data analysis</span></footer>; }
 
 export function SidebarAccount({ saveState, disabled = false }: { saveState?: string; disabled?: boolean }) {
-  return <div className="sidebar-account">{saveState && <span className="save-state" role="status"><span className={`status-dot ${saveState === 'Saved' ? 'saved-dot' : ''}`}/>{saveState}</span>}<button className="secondary" disabled={disabled} onClick={() => void signOut()}>Sign out</button></div>;
+  const user = useAccount();
+  const guest = user?.is_anonymous;
+  const account = guest ? 'Guest account' : user?.email || 'Your account';
+  return <div className="sidebar-account">
+    {saveState && <span className="save-state" role="status"><span className={`status-dot ${saveState === 'Saved' ? 'saved-dot' : ''}`}/>{saveState}</span>}
+    <div className="account-identity" role="group" aria-label="Current account">
+      <span className="account-avatar" aria-hidden="true">{guest ? 'G' : account.charAt(0).toUpperCase()}</span>
+      <div className="account-details"><span>{guest ? 'Guest workspace' : 'Signed in as'}</span><strong title={account}>{account}</strong></div>
+    </div>
+    <button className="secondary" disabled={disabled} onClick={() => void signOut()}>Sign out</button>
+  </div>;
 }

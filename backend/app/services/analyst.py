@@ -360,55 +360,81 @@ class Analyst:
         return events()
 
     async def dashboard(self, owner, project_id, request):
+        # Preserve the JSON API for existing clients and integrations.
+        events = await self.start_dashboard(owner, project_id, request)
+        payload = None
+        async for event in events:
+            if event["type"] == "dashboard":
+                payload = event["dashboard"]
+        return payload
+
+    async def start_dashboard(self, owner, project_id, request):
+        identity(request.requestId)
         project = await self.workspaces.get(owner, project_id)
         selected = self.selected(project, request.tableIds)
         scope = digest(sorted(table["id"] for table in selected))
         await self.repository.consume_quota(owner)
         prior = await self.repository.dashboard(owner, project["id"], scope)
-        if prior and prior.get("requestId") == request.requestId:
-            return prior
-        if not self.provider.ready:
+        if not (prior and prior.get("requestId") == request.requestId) and not self.provider.ready:
             raise ApiError("Analysis is currently unavailable.", 503)
-        plan = await self.provider.dashboard(self.profiles(selected))
-        by_id = {table["id"]: table for table in selected}
-        if (
-            sum(card.plan.chart_config.type == "none" for card in plan.cards) > 3
-            or sum(card.plan.chart_config.type != "none" for card in plan.cards) > 4
-        ):
-            raise ApiError("The dashboard plan exceeded its card limit. Please try again.")
-        results = []
-        budget = {"repairs": 2}
-        for card in plan.cards:
-            if card.table_id not in by_id:
-                raise ApiError("The dashboard referred to an unselected table.")
-            result, _ = await self.calculation(
-                [by_id[card.table_id]], card.plan, "Generate a dashboard", [], budget
-            )
-            results.append(result)
-        answer = ""
-        try:
-            async for text in self.provider.explain(
-                results,
-                "Summarize these dashboard findings without combining separate table totals.",
+
+        async def events():
+            if prior and prior.get("requestId") == request.requestId:
+                yield dict(type="dashboard", dashboard=prior)
+                yield dict(type="done", requestId=request.requestId)
+                return
+            yield dict(type="status", message="Choosing useful metrics and charts…")
+            plan = await self.provider.dashboard(self.profiles(selected))
+            by_id = {table["id"]: table for table in selected}
+            if (
+                sum(card.plan.chart_config.type == "none" for card in plan.cards) > 3
+                or sum(card.plan.chart_config.type != "none" for card in plan.cards) > 4
             ):
-                answer += text
-        except Exception:
-            answer = "The calculated cards are shown below. The written overview was unavailable."
-        payload = dict(
-            id=str(uuid4()),
-            requestId=request.requestId,
-            dataVersion=project["dataVersion"],
-            tableIds=[table["id"] for table in selected],
-            cards=results,
-            summary=answer,
-            createdAt=now(),
-        )
-        async with self.workspaces.cache.mutation(owner, project["id"]):
-            await self.repository.save_dashboard(
-                owner, project["id"], project["dataVersion"], scope, payload
+                raise ApiError("The dashboard plan exceeded its card limit. Please try again.")
+            if any(card.table_id not in by_id for card in plan.cards):
+                raise ApiError("The dashboard referred to an unselected table.")
+            results = []
+            budget = {"repairs": 2}
+            for index, card in enumerate(plan.cards):
+                yield dict(
+                    type="status",
+                    message=f"Calculating card {index + 1} of {len(plan.cards)}: {card.plan.chart_config.title}",
+                )
+                result, _ = await self.calculation(
+                    [by_id[card.table_id]], card.plan, "Generate a dashboard", [], budget
+                )
+                results.append(result)
+                yield dict(type="card", index=index, card=result)
+            yield dict(type="status", message="Writing your dashboard summary…")
+            answer = ""
+            try:
+                async for text in self.provider.explain(
+                    results,
+                    "Summarize these dashboard findings without combining separate table totals.",
+                ):
+                    answer += text
+                    yield dict(type="text", text=text)
+            except Exception:
+                answer = "The calculated cards are shown below. The written overview was unavailable."
+            payload = dict(
+                id=str(uuid4()),
+                requestId=request.requestId,
+                dataVersion=project["dataVersion"],
+                tableIds=[table["id"] for table in selected],
+                cards=results,
+                summary=answer,
+                createdAt=now(),
             )
-        await self.read_dashboard(owner, project["id"], [])
-        return payload
+            yield dict(type="status", message="Saving your dashboard…")
+            async with self.workspaces.cache.mutation(owner, project["id"]):
+                await self.repository.save_dashboard(
+                    owner, project["id"], project["dataVersion"], scope, payload
+                )
+            await self.read_dashboard(owner, project["id"], [])
+            yield dict(type="dashboard", dashboard=payload)
+            yield dict(type="done", requestId=request.requestId)
+
+        return events()
 
     async def read_dashboard(self, owner, project_id, table_ids):
         project_id = identity(project_id)

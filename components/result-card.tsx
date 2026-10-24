@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { AnalysisResult, Chart, Row } from '@/shared/contracts';
+import { Markdown } from './markdown';
 
 export function DataTable({ rows, limit = 20, totalRows = rows.length }: { rows: Row[]; limit?: number; totalRows?: number }) {
   if (!rows.length) return <p className="muted">No result rows.</p>;
@@ -32,16 +33,16 @@ export function ResultCard({ result, onPin, onExport }: { result: AnalysisResult
       {onPin && <button className="small" onClick={onPin}>Pin to dashboard</button>}
       {hasRows && onExport && <button className="small" onClick={onExport}>Export CSV</button>}
     </div></div>
-    {result.answer && <p className="answer">{result.answer}</p>}
+    {result.answer && <div className="answer"><Markdown>{result.answer}</Markdown></div>}
     {result.chart && <Plot chart={result.chart}/>}
     {!!result.rows.length && <DataTable rows={result.rows}/>}
     {result.sections?.map((section, index) => <ResultCard key={index} result={section}/>)}
     <details><summary>Method and assumptions</summary>
       <p className="caption">{result.sections ? `${result.sections.length} calculations` : `${result.rows.length.toLocaleString()} result rows · ${result.totalRows.toLocaleString()} input rows`}</p>
-      {result.plan.explanation && <p>{result.plan.explanation}</p>}
-      <ol>{result.steps.map((s, i) => <li key={i}>{s}</li>)}</ol>
+      {result.plan.explanation && <Markdown>{result.plan.explanation}</Markdown>}
+      <ol>{result.steps.map((s, i) => <li key={i}><Markdown>{s}</Markdown></li>)}</ol>
     </details>
-    {!!result.warnings.length && <details className="quality"><summary>Data quality and limitations ({result.warnings.length})</summary><ul>{result.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul></details>}
+    {!!result.warnings.length && <details className="quality"><summary>Data quality and limitations ({result.warnings.length})</summary><ul>{result.warnings.map((w, i) => <li key={i}><Markdown>{w}</Markdown></li>)}</ul></details>}
     {result.sql && <details><summary>Generated SQL</summary><p className="caption">DuckDB SQL executed against the selected table versions.</p>
       <button className="small" onClick={async () => { try { await navigator.clipboard.writeText(result.sql!); setCopied(true); } catch { setCopied(false); } }}>{copied ? 'Copied' : 'Copy SQL'}</button><pre>{result.sql}</pre></details>}
   </section>;
