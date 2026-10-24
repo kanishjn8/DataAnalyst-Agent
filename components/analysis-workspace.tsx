@@ -121,13 +121,12 @@ export function Footer() { return <footer><span>Data analysis</span></footer>; }
 
 export function SidebarAccount({ saveState, disabled = false }: { saveState?: string; disabled?: boolean }) {
   const user = useAccount();
-  const guest = user?.is_anonymous;
-  const account = guest ? 'Guest account' : user?.email || 'Your account';
+  const account = user?.email || 'Your account';
   return <div className="sidebar-account">
     {saveState && <span className="save-state" role="status"><span className={`status-dot ${saveState === 'Saved' ? 'saved-dot' : ''}`}/>{saveState}</span>}
     <div className="account-identity" role="group" aria-label="Current account">
-      <span className="account-avatar" aria-hidden="true">{guest ? 'G' : account.charAt(0).toUpperCase()}</span>
-      <div className="account-details"><span>{guest ? 'Guest workspace' : 'Signed in as'}</span><strong title={account}>{account}</strong></div>
+      <span className="account-avatar" aria-hidden="true">{account.charAt(0).toUpperCase()}</span>
+      <div className="account-details"><span>Signed in as</span><strong title={account}>{account}</strong></div>
     </div>
     <button className="secondary" disabled={disabled} onClick={() => void signOut()}>Sign out</button>
   </div>;

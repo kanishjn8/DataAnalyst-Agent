@@ -76,6 +76,7 @@ async def test_hosted_signature_verification_caches_keys_and_preserves_identity(
 @pytest.mark.parametrize("changed", [
     {"iss": "https://another-project.supabase.co/auth/v1"},
     {"aud": "anon"}, {"role": "service_role"}, {"sub": "not-a-user-id"}, {"exp": 1},
+    {"is_anonymous": True},
 ])
 async def test_hosted_tokens_validate_claims(signing, changed):
     private, algorithm, public = signing
@@ -166,6 +167,9 @@ async def test_hs256_local_sessions_keep_working_without_network():
     try:
         token = jwt.encode(claims(), SECRET, algorithm="HS256")
         assert await auth(request_for(token)) == OWNER
+        with pytest.raises(ApiError, match="Sign in with an account") as error:
+            await auth(request_for(jwt.encode(claims(is_anonymous=True), SECRET, algorithm="HS256")))
+        assert error.value.status == 401
         with pytest.raises(ApiError):
             await auth(request_for(jwt.encode(claims(), "wrong-secret" * 4, algorithm="HS256")))
     finally:

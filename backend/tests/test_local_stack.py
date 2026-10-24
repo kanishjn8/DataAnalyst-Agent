@@ -428,7 +428,7 @@ async def test_auth_ownership_untrusted_sizes_and_delete(stack):
 
 
 @pytest.mark.anyio
-async def test_guest_starts_empty_without_automatic_sample_data(stack):
+async def test_anonymous_sessions_cannot_access_workspaces(stack):
     client, _, model, owner = stack
     settings = Settings()
     token = jwt.encode(
@@ -449,8 +449,7 @@ async def test_guest_starts_empty_without_automatic_sample_data(stack):
         )
         for _ in range(2)
     ])
-    assert all(response.status_code == 200 for response in responses)
-    assert all(response.json()["projects"] == [] for response in responses)
+    assert all(response.status_code == 401 for response in responses)
     assert model.calls == 0
 
 

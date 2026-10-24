@@ -102,7 +102,8 @@ class Auth:
             )
             if claims.get("role") != "authenticated":
                 raise ValueError("Invalid role")
-            request.state.is_guest = bool(claims.get("is_anonymous"))
+            if claims.get("is_anonymous"):
+                raise ApiError("Sign in with an account to continue.", 401)
             return str(UUID(claims["sub"]))
         except (jwt.PyJWTError, ValueError, TypeError):
             raise ApiError("Your session expired. Sign in again.", 401) from None

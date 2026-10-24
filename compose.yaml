@@ -47,9 +47,8 @@ services:
       GOTRUE_JWT_ADMIN_ROLES: service_role
       GOTRUE_JWT_EXP: 3600
       GOTRUE_EXTERNAL_EMAIL_ENABLED: "true"
-      GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "true"
+      GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "false"
       GOTRUE_MAILER_AUTOCONFIRM: "true"
-      GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 100
       GOTRUE_RATE_LIMIT_EMAIL_SENT: 100
     healthcheck:
       test: [CMD, wget, -q, --spider, http://localhost:9999/health]
