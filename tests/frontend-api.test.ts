@@ -29,6 +29,16 @@ describe('frontend API boundary', () => {
     expect(await listProjects()).toMatchObject({ projects: [] });
     expect(fetch.mock.calls[0][0]).toBe('/api/workspace');
   });
+  it('renames an analysis using its revision and returns the saved title', async () => {
+    const renamed = { ...project, title: 'Quarterly sales', revision: 5 };
+    const fetch = vi.fn().mockResolvedValue(Response.json({ project: renamed })); vi.stubGlobal('fetch', fetch);
+    expect(await mutateProject(project, { action: 'patch', title: 'Quarterly sales' })).toEqual(renamed);
+    expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual({ action: 'patch', workspaceId: project.id, revision: 4, title: 'Quarterly sales' });
+  });
+  it('reports a conflicting rename so the user can retry without losing newer changes', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(Response.json({ error: 'This analysis changed. Please reload.' }, { status: 409 })));
+    await expect(mutateProject(project, { action: 'patch', title: 'Quarterly sales' })).rejects.toThrow('This analysis changed. Please reload.');
+  });
   it('sends preparation choices and revision without computed rows', async () => {
     const fetch = vi.fn().mockResolvedValue(Response.json({ project })); vi.stubGlobal('fetch', fetch);
     await mutateProject(project, { action: 'canvas', canvas: { kind: 'graph', operations: [], positions: {} } });

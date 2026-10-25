@@ -12,7 +12,7 @@ type WorkspaceState = {
   projects: ProjectSummary[]; active: Project | null; capabilities: Capabilities; saveState: string; error: string;
   clearError: () => void; reloadList: () => Promise<void>; open: (id: string, signal: AbortSignal) => Promise<void>;
   action: (mutation: Mutation) => Promise<Project>; refresh: () => Promise<Project>;
-  create: (title: string) => Promise<void>; remove: (id: string) => Promise<void>; back: () => Promise<void>;
+  create: (title: string) => Promise<void>; rename: (id: string, title: string) => Promise<void>; remove: (id: string) => Promise<void>; back: () => Promise<void>;
 };
 const Context = createContext<WorkspaceState | null>(null);
 function useWorkspace() {
@@ -66,24 +66,37 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   async function create(title: string) {
     const project = await createProject(title); accept(project); setSaveState('Saved'); router.push(analysisPath(project.id));
   }
+  async function rename(id: string, title: string) {
+    const next = writes.current.catch(() => {}).then(async () => {
+      // Load the latest revision so a name change cannot overwrite newer edits.
+      const project = await loadProject(id);
+      const saved = await mutateProject(project, { action: 'patch', title });
+      // An earlier title draft must not restore the old name on the next visit.
+      try { sessionStorage.removeItem(`analysis:${id}:title`); } catch { /* Storage may be disabled. */ }
+      if (current.current?.id === id) { accept(saved); setSaveState('Saved'); }
+      else setProjects(list => [saved, ...list.filter(project => project.id !== id)].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)));
+    });
+    writes.current = next;
+    await next;
+  }
   async function remove(id: string) {
     await writes.current; await deleteProject(id);
     setProjects(list => list.filter(project => project.id !== id));
     if (current.current?.id === id) { current.current = null; setActive(null); }
   }
-  return <Context.Provider value={{ projects, active, capabilities, saveState, error, clearError: () => setError(''), reloadList, open, action, refresh, create, remove, back }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ projects, active, capabilities, saveState, error, clearError: () => setError(''), reloadList, open, action, refresh, create, rename, remove, back }}>{children}</Context.Provider>;
 }
 
 export function Workspace() {
   const router = useRouter();
-  const { projects, reloadList, create, remove } = useWorkspace();
+  const { projects, reloadList, create, rename, remove } = useWorkspace();
   const [loading, setLoading] = useState(true), [error, setError] = useState('');
   useEffect(() => {
     let alive = true;
     reloadList().catch(error => { if (alive) setError(error.message); }).finally(() => { if (alive) setLoading(false); });
     return () => { alive = false; };
   }, [reloadList]);
-  return <div className="app-shell overview-shell"><aside className="sidebar"><div className="sidebar-brand"><span className="brand-mark"><Icon name="grid" size={21}/></span><div><strong>Workspace</strong><span>Data analysis</span></div></div><p className="nav-label">YOUR WORKSPACE</p><nav className="side-nav" aria-label="Main navigation"><button aria-current="page"><Icon name="grid" size={18}/>Your analyses<span className="nav-count">{projects.length}</span></button></nav><div className="sidebar-rule"/><SidebarAccount/></aside><div className="main-shell"><main className="main-content">{error && <div className="alert" role="alert"><Icon name="alert" size={16}/>{error}<button onClick={() => { setLoading(true); reloadList().then(() => setError('')).catch(error => setError(error.message)).finally(() => setLoading(false)); }}>Retry</button></div>}<ProjectList projects={projects} loading={loading} onOpen={id => router.push(analysisPath(id))} onCreate={create} onDelete={remove}/></main><Footer/></div></div>;
+  return <div className="app-shell overview-shell"><aside className="sidebar"><div className="sidebar-brand"><span className="brand-mark"><Icon name="grid" size={21}/></span><div><strong>Workspace</strong><span>Data analysis</span></div></div><p className="nav-label">YOUR WORKSPACE</p><nav className="side-nav" aria-label="Main navigation"><button aria-current="page"><Icon name="grid" size={18}/>Your analyses<span className="nav-count">{projects.length}</span></button></nav><div className="sidebar-rule"/><SidebarAccount/></aside><div className="main-shell"><main className="main-content">{error && <div className="alert" role="alert"><Icon name="alert" size={16}/>{error}<button onClick={() => { setLoading(true); reloadList().then(() => setError('')).catch(error => setError(error.message)).finally(() => setLoading(false)); }}>Retry</button></div>}<ProjectList projects={projects} loading={loading} onOpen={id => router.push(analysisPath(id))} onCreate={create} onRename={rename} onDelete={remove}/></main><Footer/></div></div>;
 }
 
 export function AnalysisRoute({ analysisId, view }: { analysisId: string; view: AnalysisView }) {

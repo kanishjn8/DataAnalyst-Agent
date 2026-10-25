@@ -97,6 +97,9 @@ select:not([multiple]):not([size]){appearance:none;-webkit-appearance:none;paddi
 @media(max-width:600px){.dashboard-selection{padding:20px 17px}.dashboard-selection .section-heading{flex-direction:column;gap:15px}.dashboard-selection .secondary{width:100%}.dashboard-table-options{grid-template-columns:minmax(0,1fr)}.dashboard-summary{padding:18px}.generation-progress{padding:17px}.dashboard-layout{gap:24px}}
 
 /* Pin state stays visible in Analysis and pinned answers lead the dashboard. */
+.project-card-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.project-rename{display:flex;align-items:center;gap:5px;background:none;border:0;padding:5px 2px;color:#7560ad;font-size:11px;border-radius:4px}
+.project-rename:hover{background:#f1edf8;color:#604693}
 .pin-button{display:inline-flex;align-items:center;gap:6px}
 .pin-button[aria-pressed=true]{background:#eee9fa;border-color:#a795d0;color:#674e9d}
 .pin-button[aria-pressed=true]:hover{background:#e5dcf6}
